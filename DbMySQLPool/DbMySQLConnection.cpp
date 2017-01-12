@@ -245,6 +245,15 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, std::string & strData )
 }
 
 
+/**
+ * @ingroup DbMySQLPool
+ * @brief SELECT password(?) 와 같은 SQL 문을 실행한 결과를 가져온다.
+ * @param pszSQL		SQL 문
+ * @param pszArg		bind 할 문자열
+ * @param strData		결과를 저장할 변수
+ * @param iDataSize 결과 문자열의 최대 길이
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
 bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std::string & strData, int iDataSize )
 {
 	if( PrepareExecute( pszSQL, pszArg ) == false ) return false;

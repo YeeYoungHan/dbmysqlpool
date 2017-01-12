@@ -45,7 +45,7 @@ public:
 	bool QueryOne( const char * pszSQL, uint32_t & iData );
 	bool QueryOne( const char * pszSQL, uint64_t & iData );
 	bool QueryOne( const char * pszSQL, std::string & strData );
-	bool QueryOne( const char * pszSQL, const char * pszArg, std::string & strData );
+	bool QueryOne( const char * pszSQL, const char * pszArg, std::string & strData, int iDataSize );
 
 	bool Prepare( const char * pszSQL );
 	bool Bind( int iIndex, const char * pszVal );

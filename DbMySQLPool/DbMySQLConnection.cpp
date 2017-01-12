@@ -244,33 +244,52 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, std::string & strData )
 	return bRes;
 }
 
-bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std::string & strData )
+
+bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std::string & strData, int iDataSize )
 {
 	if( PrepareExecute( pszSQL, pszArg ) == false ) return false;
 
-	MYSQL_RES * psttRes = mysql_stmt_result_metadata( m_psttStmt );
-	if( psttRes == NULL )
+	MYSQL_BIND    sttBind;
+	my_bool				bError = 0, bNull = 0;
+	unsigned long iLength;
+	char	* pszData = NULL;
+
+	pszData = (char *)malloc( iDataSize );
+	if( pszData == NULL )
 	{
-		CLog::Print( LOG_ERROR, "mysql_use_result - %.2048s - %s", pszSQL, mysql_error( &m_sttMySQL ) );
+		PrepareClose();
 		return false;
 	}
 
-	MYSQL_ROW sttRow;
-	bool bRes = false;
-	
-	if( ( sttRow = mysql_fetch_row( psttRes ) ) )
+	memset( pszData, 0, iDataSize );
+	memset( &sttBind, 0, sizeof(sttBind) );
+
+	sttBind.buffer_type= MYSQL_TYPE_STRING;
+	sttBind.buffer = pszData;
+	sttBind.buffer_length = iDataSize - 1;
+	sttBind.is_null = &bError;
+	sttBind.length = &iLength;
+	sttBind.error = &bError;
+
+	if( mysql_stmt_bind_result( m_psttStmt, &sttBind ) )
 	{
-		if( sttRow[0] )
-		{
-			strData = sttRow[0];
-			bRes = true;
-		}
+		PrepareClose();
+		free( pszData );
+		return false;
 	}
 
-	mysql_free_result( psttRes );
+	if( !mysql_stmt_fetch( m_psttStmt ) )
+	{
+		if( !bNull )
+		{
+			strData = pszData;
+		}
+	}
+	
 	PrepareClose();
+	free( pszData );
 
-	return bRes;
+	return true;
 }
 
 /**

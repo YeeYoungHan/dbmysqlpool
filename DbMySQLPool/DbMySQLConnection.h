@@ -58,6 +58,8 @@ public:
 	uint32_t GetError();
 	bool IsExistTable( const char * pszTableName );
 
+	static void Final( );
+
 private:
 	std::string	m_strDbHost;
 	std::string	m_strDbUserId;

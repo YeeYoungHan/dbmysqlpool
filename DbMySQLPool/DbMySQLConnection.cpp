@@ -626,3 +626,12 @@ bool CDbMySQLConnection::IsExistTable( const char * pszTableName )
 
 	return false;
 }
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief MySQL 라이브러리 사용을 종료할 때에 호출하여서 메모리를 해제한다.
+ */
+void CDbMySQLConnection::Final( )
+{
+	mysql_library_end();
+}

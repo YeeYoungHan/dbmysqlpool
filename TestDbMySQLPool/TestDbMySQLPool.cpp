@@ -36,7 +36,7 @@ int main( int argc, char * argv[] )
 	printf( "[%s]\n", strRes.c_str() );
 
 	clsDB.Close();
-	mysql_library_end();
+	CDbMySQLConnection::Final( );
 
 	return 0;
 }

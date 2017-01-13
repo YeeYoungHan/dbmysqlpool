@@ -21,6 +21,7 @@
 #include "Log.h"
 #include "errmsg.h"
 #include "mysqld_error.h"
+#include <stdarg.h>
 #include "MemoryDebug.h"
 
 #ifdef WIN32
@@ -281,7 +282,11 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, std::string & strData )
  */
 bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std::string & strData, int iDataSize )
 {
-	if( PrepareExecute( pszSQL, pszArg ) == false ) return false;
+	if( Prepare( pszSQL ) == false || Bind( 0, pszArg ) == false || PrepareExecute( ) == false )
+	{
+		PrepareClose();
+		return false;
+	}
 
 	MYSQL_BIND    sttBind;
 	my_bool				bError = 0, bNull = 0;
@@ -599,16 +604,45 @@ bool CDbMySQLConnection::PrepareClose( )
 	return true;
 }
 
-bool CDbMySQLConnection::PrepareExecute( const char * pszSQL, const char * pszArg )
+/**
+ * @ingroup DbMySQLPool
+ * @brief prepare statement 로 SQL INSERT, UPDATE, DELETE 명령을 수행한다.
+ * @param pszSQL		동적 SQL 문
+ * @param iArgCount Bind 인자 개수
+ * @param						Bind 인자
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLConnection::Execute( const char * pszSQL, int iArgCount, ... )
 {
+	bool bRes = false;
+	va_list pArgList;
+
 	if( Prepare( pszSQL ) == false ) return false;
-	if( Bind( 0, pszArg ) == false || PrepareExecute( ) == false ) 
+
+	va_start( pArgList, iArgCount );
+
+	for( int i = 0; i < iArgCount; ++i )
 	{
-		PrepareClose( );
-		return false;
+		char * pszArg = va_arg( pArgList, char * );
+		if( pszArg == NULL )
+		{
+			CLog::Print( LOG_ERROR, "%s arg(%d) is NULL", __FUNCTION__, i );
+			PrepareClose( );
+			return false;
+		}
+		Bind( i, pszArg );
 	}
 
-	return true;
+	va_end( pArgList );
+
+	if( PrepareExecute( ) ) 
+	{
+		bRes = true;
+	}
+
+	PrepareClose( );
+
+	return bRes;
 }
 
 /**
@@ -626,6 +660,11 @@ uint64_t CDbMySQLConnection::GetAffectedRow( )
 	return mysql_affected_rows( &m_sttMySQL );
 }
 
+/**
+ * @ingroup DbMySQLPool
+ * @brief mysql_errno 를 리턴한다.
+ * @returns mysql_errno 를 리턴한다.
+ */
 uint32_t CDbMySQLConnection::GetError()
 {
 	return mysql_errno( &m_sttMySQL );

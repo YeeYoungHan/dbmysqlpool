@@ -53,7 +53,7 @@ public:
 	bool PrepareExecute( uint64_t * piId = NULL );
 	bool PrepareClose( );
 
-	bool PrepareExecute( const char * pszSQL, const char * pszArg );
+	bool Execute( const char * pszSQL, int iArgCount, ... );
 
 	uint64_t GetAffectedRow( );
 	uint32_t GetError();

@@ -25,8 +25,8 @@
 #include "StringUtility.h"
 
 /**
- * @ingroup DbPool
- * @brief DB 연결 관리 및 쿼리 실행 클래스
+ * @ingroup DbMySQLPool
+ * @brief MySQL DB 연결 관리 및 쿼리 실행 클래스
  */
 class CDbMySQLConnection
 {

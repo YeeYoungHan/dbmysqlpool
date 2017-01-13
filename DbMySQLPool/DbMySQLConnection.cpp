@@ -36,7 +36,7 @@ CDbMySQLConnection::~CDbMySQLConnection()
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB 에 연결한다.
  * @param pszHost			MySQL 호스트 이름 or IP 주소
  * @param pszUserId		MySQL 접속 아이디
@@ -63,7 +63,7 @@ bool CDbMySQLConnection::Connect( const char * pszHost, const char * pszUserId, 
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB 연결 종료한다.
  */
 void CDbMySQLConnection::Close( )
@@ -77,7 +77,7 @@ void CDbMySQLConnection::Close( )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief INSERT / UPDATE / DELETE SQL 문을 실행한다.
  * @param pszSQL SQL 문
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
@@ -88,7 +88,7 @@ bool CDbMySQLConnection::Execute( const char * pszSQL )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief INSERT 문의 실행한다.
  * @param pszSQL	SQL 문
  * @param piId		AUTO_INCREMENT 로 생성된 정수 저장 변수
@@ -107,7 +107,7 @@ bool CDbMySQLConnection::Insert( const char * pszSQL, uint64_t * piId )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT 문을 실행한다.
  * @param pszSQL		SQL 문
  * @param pclsData	응용 프로그램 변수
@@ -138,7 +138,7 @@ bool CDbMySQLConnection::Query( const char * pszSQL, void * pclsData, bool (*Fet
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -157,7 +157,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, int & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param cData		검색 결과 저장 변수
@@ -176,7 +176,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint8_t & cData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -195,7 +195,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint32_t & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -214,7 +214,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint64_t & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -233,7 +233,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, int64_t & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 한 개의 row, column 을 가져오는 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param strData 검색 결과 저장 변수
@@ -327,7 +327,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB SQL 문을 실행한다. DB 연결 오류가 발생하면 DB 에 재연결한 후, SQL 문을 실행한다.
  * @param pszSQL SQL 문
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
@@ -387,7 +387,7 @@ bool CDbMySQLConnection::Query( const char * pszSQL )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 이미 설정된 DB 연결 정보로 DB 에 연결한다.
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
  */
@@ -427,7 +427,7 @@ bool CDbMySQLConnection::Connect( )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief prepareStmt 를 시작한다.
  * @param pszSQL SQL 문
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
@@ -505,7 +505,7 @@ bool CDbMySQLConnection::Prepare( const char * pszSQL )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief prepareStmt 로 bind 할 변수를 설정한다.
  * @param iIndex bind 변수 인덱스
  * @param pszVal 값
@@ -541,7 +541,7 @@ bool CDbMySQLConnection::Bind( int iIndex, const char * pszVal )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief prepareStmt 를 실행한다.
  * @param piId AUTO_INCREMENT 로 생성된 정수 저장 변수
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
@@ -575,7 +575,7 @@ bool CDbMySQLConnection::PrepareExecute( uint64_t * piId )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief prepareStmt 를 종료한다.
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
  */
@@ -612,7 +612,7 @@ bool CDbMySQLConnection::PrepareExecute( const char * pszSQL, const char * pszAr
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief It returns the number of rows changed, deleted, or inserted by the last statement if it was an UPDATE, DELETE, or INSERT.
  * @returns An integer greater than zero indicates the number of rows affected or retrieved. Zero indicates that no records were updated for an UPDATE statement, no rows matched the WHERE clause in the query or that no query has yet been executed. -1 indicates that the query returned an error 
  */
@@ -632,7 +632,7 @@ uint32_t CDbMySQLConnection::GetError()
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 테이블이 존재하는지 검사한다.
  * @param pszTableName 테이블 이름
  * @returns 테이블이 존재하면 true 를 리턴하고 그렇지 않으면 false 를 리턴한다.

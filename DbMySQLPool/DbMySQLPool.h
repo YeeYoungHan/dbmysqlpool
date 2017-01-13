@@ -20,7 +20,7 @@
 #define _DB_MYSQL_POOL_H_
 
 /**
- * @defgroup DbPool DbPool
+ * @defgroup DbMySQLPool DbMySQLPool
  * MySQL DB pool 라이브러리
  */
 
@@ -34,8 +34,8 @@ typedef std::list< CDbMySQLConnection * > DB_CONNECTION_LIST;
 typedef std::map< CDbMySQLConnection *, CDbMySQLConnection * > DB_CONNECTION_MAP;
 
 /**
- * @ingroup DbPool
- * @brief DB Pool 관리 클래스
+ * @ingroup DbMySQLPool
+ * @brief MySQL DB connection pool 관리 클래스
  */
 class CDbMySQLPool
 {

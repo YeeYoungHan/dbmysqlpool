@@ -21,7 +21,7 @@
 #include "Log.h"
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SQL injection 공격 문자열이 포함되어 있는지 검사한다.
  * @param strValue 검사 문자열
  * @returns SQL injection 공격 문자열이 포함되어 있으면 false 를 리턴하고 그렇지 않으면 true 를 리턴한다.
@@ -43,7 +43,7 @@ bool DbCheckSqlInjection( std::string & strValue )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief / 를 제외한 SQL injection 공격 문자열이 포함되어 있는지 검사한다.
  * @param strValue 검사 문자열
  * @returns SQL injection 공격 문자열이 포함되어 있으면 false 를 리턴하고 그렇지 않으면 true 를 리턴한다.
@@ -65,7 +65,7 @@ bool DbCheckSqlInjectionNotSlash( std::string & strValue )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 공백을 제외한 SQL injection 공격 문자열이 포함되어 있는지 검사한다.
  * @param strValue 검사 문자열
  * @returns SQL injection 공격 문자열이 포함되어 있으면 false 를 리턴하고 그렇지 않으면 true 를 리턴한다.
@@ -87,7 +87,7 @@ bool DbCheckSqlInjectionNotSpace( std::string & strValue )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief - 를 제외한 SQL injection 공격 문자열이 포함되어 있는지 검사한다.
  * @param strValue 검사 문자열
  * @returns SQL injection 공격 문자열이 포함되어 있으면 false 를 리턴하고 그렇지 않으면 true 를 리턴한다.
@@ -109,7 +109,7 @@ bool DbCheckSqlInjectionNotMinus( std::string & strValue )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 공백을 제외한 SQL injection 공격 문자열이 존재하면 공백으로 수정한다.
  * @param strValue 검사 문자열
  */

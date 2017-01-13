@@ -32,7 +32,7 @@ CDbMySQLPool::~CDbMySQLPool()
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB 에 연결한다.
  * @param iPoolCount	DB pool 에 포함될 DB 연결 개수
  * @param pszHost			MySQL 호스트 이름 or IP 주소
@@ -81,7 +81,7 @@ bool CDbMySQLPool::Create( int iPoolCount, const char * pszHost, const char * ps
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB pool 에 포함된 DB 연결을 해제하고 리소스를 정리한다.
  */
 void CDbMySQLPool::Destroy( )
@@ -120,7 +120,7 @@ void CDbMySQLPool::Destroy( )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB pool 에서 DB 연결 객체를 가져온다.
  * @param ppclsDbConn DB 연결 객체의 포인터
  * @param bStandByUntilAvailable 사용할 수 있는 DB 연결 객체가 존재할 때까지 대기하면 true 이고 그렇지 않으면 false.
@@ -156,7 +156,7 @@ bool CDbMySQLPool::Select( CDbMySQLConnection ** ppclsDbConn, bool bStandByUntil
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief DB 연결 객체를 DB pool 에 반환한다.
  * @param pclsDbConn DB 연결 객체
  */
@@ -177,7 +177,7 @@ void CDbMySQLPool::Release( CDbMySQLConnection * pclsDbConn )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief INSERT / UPDATE / DELETE SQL 문을 실행한다.
  * @param pszSQL SQL 문
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
@@ -192,7 +192,7 @@ bool CDbMySQLPool::Execute( const char * pszSQL )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief INSERT 문의 실행한다.
  * @param pszSQL	SQL 문
  * @param piId		AUTO_INCREMENT 로 생성된 정수 저장 변수
@@ -208,7 +208,7 @@ bool CDbMySQLPool::Insert( const char * pszSQL, uint64_t * piId )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT 문을 실행한다.
  * @param pszSQL		SQL 문
  * @param pclsData	응용 프로그램 변수
@@ -225,7 +225,7 @@ bool CDbMySQLPool::Query( const char * pszSQL, void * pclsData, bool (*FetchRow)
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -241,7 +241,7 @@ bool CDbMySQLPool::QueryOne( const char * pszSQL, int & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -257,7 +257,7 @@ bool CDbMySQLPool::QueryOne( const char * pszSQL, uint32_t & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -273,7 +273,7 @@ bool CDbMySQLPool::QueryOne( const char * pszSQL, uint64_t & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param iData		검색 결과 저장 변수
@@ -289,7 +289,7 @@ bool CDbMySQLPool::QueryOne( const char * pszSQL, int64_t & iData )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief SELECT string 와 같은 1개의 row, column 인 SQL 문을 실행한다.
  * @param pszSQL	SQL 문
  * @param strData 검색 결과 저장 변수

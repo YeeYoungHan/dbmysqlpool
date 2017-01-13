@@ -28,7 +28,7 @@ static CSipMutex gclsMutex;
 static int giThreadCount = 0;
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 
  */
 class CDbMySQLThreadArg
@@ -45,7 +45,7 @@ public:
 };
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 
  * @param lpParameter 
  * @returns 
@@ -89,7 +89,7 @@ THREAD_API DbMySQLThread( LPVOID lpParameter )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief MySQL 연동 쓰레드들을 시작한다.
  * @param iThreadCount MySQL 연동 쓰레드 개수
  * @param pclsSqlQueue SQL 문자열 큐
@@ -132,7 +132,7 @@ bool StartDbMySQLThread( int iThreadCount, CDbMySQLQueue * pclsSqlQueue, const c
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief MySQL 연동 쓰레드를 시작한다.
  * @param pclsDbConn		MySQL DB 연결 객체
  * @param pclsSqlQueue	SQL 문자열 큐
@@ -153,7 +153,7 @@ bool StartDbMySQLThread( CDbMySQLConnection * pclsDbConn, CDbMySQLQueue * pclsSq
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief MySQL 연동 쓰레드에 중지 명령을 전송한다.
  */
 void StopDbMySQLThread( )
@@ -162,7 +162,7 @@ void StopDbMySQLThread( )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief MySQL 연동 쓰레드가 실행 중인지 검사한다.
  * @returns MySQL 연동 쓰레드가 실행중이면 true 를 리턴하고 그렇지 않으면 false 를 리턴한다.
  */

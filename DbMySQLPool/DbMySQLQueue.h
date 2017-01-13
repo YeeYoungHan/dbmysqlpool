@@ -26,8 +26,8 @@
 typedef std::list< std::string > DB_MYSQL_SQL_QUEUE;
 
 /**
- * @ingroup DbPool
- * @brief 
+ * @ingroup DbMySQLPool
+ * @brief SQL 문을 저장하는 큐 자료구조
  */
 class CDbMySQLQueue
 {

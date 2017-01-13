@@ -30,7 +30,7 @@ CDbMySQLQueue::~CDbMySQLQueue()
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 큐에 SQL 문자열을 입력한다.
  * @param pszSQL SQL 문자열
  * @returns 성공하면 true 를 리턴하고 그렇지 않으면 false 를 리턴한다.
@@ -63,7 +63,7 @@ bool CDbMySQLQueue::Insert( const char * pszSQL )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 큐에서 SQL 문자열을 가져온다.
  * @param strSQL	SQL 문자열 저장 변수
  * @param bWait		SQL 문자열이 존재할 때까지 대기하는가?
@@ -94,7 +94,7 @@ bool CDbMySQLQueue::Select( std::string & strSQL, bool bWait )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 큐에 저장된 SQL 문자열의 개수를 리턴한다.
  * @returns 큐에 저장된 SQL 문자열의 개수를 리턴한다.
  */
@@ -110,7 +110,7 @@ int CDbMySQLQueue::GetSize( )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 큐에 SQL 문자열이 존재할 때까지 대기하는 쓰레드에게 이벤트를 전송한다.
  */
 void CDbMySQLQueue::Signal( )
@@ -119,7 +119,7 @@ void CDbMySQLQueue::Signal( )
 }
 
 /**
- * @ingroup DbPool
+ * @ingroup DbMySQLPool
  * @brief 큐에 저장할 수 있는 SQL 문자열의 최대 개수를 설정한다.
  * @param iMaxSize 큐에 저장할 수 있는 SQL 문자열의 최대 개수
  */

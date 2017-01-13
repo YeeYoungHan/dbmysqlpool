@@ -53,6 +53,12 @@ public:
 	bool Insert( const char * pszSQL, uint64_t * piId );
 	bool Query( const char * pszSQL, void * pclsData, bool (*FetchRow)( void *, MYSQL_ROW & sttRow ) );
 
+	bool QueryOne( const char * pszSQL, int & iData );
+	bool QueryOne( const char * pszSQL, uint32_t & iData );
+	bool QueryOne( const char * pszSQL, uint64_t & iData );
+	bool QueryOne( const char * pszSQL, int64_t & iData );
+	bool QueryOne( const char * pszSQL, std::string & strData );
+
 private:
 	CSipMutex	m_clsMutex;
 	DB_CONNECTION_LIST m_clsStandByList;

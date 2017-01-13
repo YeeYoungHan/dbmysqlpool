@@ -223,3 +223,83 @@ bool CDbMySQLPool::Query( const char * pszSQL, void * pclsData, bool (*FetchRow)
 
 	return clsData.m_pclsData->Query( pszSQL, pclsData, FetchRow );
 }
+
+/**
+ * @ingroup DbPool
+ * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
+ * @param pszSQL	SQL 문
+ * @param iData		검색 결과 저장 변수
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLPool::QueryOne( const char * pszSQL, int & iData )
+{
+	CAutoRelease< CDbMySQLPool, CDbMySQLConnection > clsData( *this );
+
+	if( Select( &clsData.m_pclsData ) == false ) return false;
+
+	return clsData.m_pclsData->QueryOne( pszSQL, iData );
+}
+
+/**
+ * @ingroup DbPool
+ * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
+ * @param pszSQL	SQL 문
+ * @param iData		검색 결과 저장 변수
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLPool::QueryOne( const char * pszSQL, uint32_t & iData )
+{
+	CAutoRelease< CDbMySQLPool, CDbMySQLConnection > clsData( *this );
+
+	if( Select( &clsData.m_pclsData ) == false ) return false;
+
+	return clsData.m_pclsData->QueryOne( pszSQL, iData );
+}
+
+/**
+ * @ingroup DbPool
+ * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
+ * @param pszSQL	SQL 문
+ * @param iData		검색 결과 저장 변수
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLPool::QueryOne( const char * pszSQL, uint64_t & iData )
+{
+	CAutoRelease< CDbMySQLPool, CDbMySQLConnection > clsData( *this );
+
+	if( Select( &clsData.m_pclsData ) == false ) return false;
+
+	return clsData.m_pclsData->QueryOne( pszSQL, iData );
+}
+
+/**
+ * @ingroup DbPool
+ * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
+ * @param pszSQL	SQL 문
+ * @param iData		검색 결과 저장 변수
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLPool::QueryOne( const char * pszSQL, int64_t & iData )
+{
+	CAutoRelease< CDbMySQLPool, CDbMySQLConnection > clsData( *this );
+
+	if( Select( &clsData.m_pclsData ) == false ) return false;
+
+	return clsData.m_pclsData->QueryOne( pszSQL, iData );
+}
+
+/**
+ * @ingroup DbPool
+ * @brief SELECT string 와 같은 1개의 row, column 인 SQL 문을 실행한다.
+ * @param pszSQL	SQL 문
+ * @param strData 검색 결과 저장 변수
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLPool::QueryOne( const char * pszSQL, std::string & strData )
+{
+	CAutoRelease< CDbMySQLPool, CDbMySQLConnection > clsData( *this );
+
+	if( Select( &clsData.m_pclsData ) == false ) return false;
+
+	return clsData.m_pclsData->QueryOne( pszSQL, strData );
+}

@@ -148,6 +148,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, int & iData )
 {
 	std::string strData;
 
+	iData = 0;
 	if( QueryOne( pszSQL, strData ) == false ) return false;
 
 	iData = atoi( strData.c_str() );
@@ -166,6 +167,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint8_t & cData )
 {
 	std::string strData;
 
+	cData = 0;
 	if( QueryOne( pszSQL, strData ) == false ) return false;
 
 	cData = atoi( strData.c_str() );
@@ -184,6 +186,7 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint32_t & iData )
 {
 	std::string strData;
 
+	iData = 0;
 	if( QueryOne( pszSQL, strData ) == false ) return false;
 
 	iData = GetUInt32( strData.c_str() );
@@ -202,9 +205,29 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint64_t & iData )
 {
 	std::string strData;
 
+	iData = 0;
 	if( QueryOne( pszSQL, strData ) == false ) return false;
 
 	iData = GetUInt64( strData.c_str() );
+
+	return true;
+}
+
+/**
+ * @ingroup DbPool
+ * @brief SELECT count(*) 와 같은 1개의 row, column 인 SQL 문을 실행한다.
+ * @param pszSQL	SQL 문
+ * @param iData		검색 결과 저장 변수
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLConnection::QueryOne( const char * pszSQL, int64_t & iData )
+{
+	std::string strData;
+
+	iData = 0;
+	if( QueryOne( pszSQL, strData ) == false ) return false;
+
+	iData = atoll( strData.c_str() );
 
 	return true;
 }
@@ -218,6 +241,8 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, uint64_t & iData )
  */
 bool CDbMySQLConnection::QueryOne( const char * pszSQL, std::string & strData )
 {
+	strData.clear();
+
 	if( Query( pszSQL ) == false ) return false;
 
 	MYSQL_RES * psttRes = mysql_use_result( &m_sttMySQL );

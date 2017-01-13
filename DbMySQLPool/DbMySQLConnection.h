@@ -38,6 +38,8 @@ public:
 	void Close( );
 
 	bool Execute( const char * pszSQL );
+	bool Execute( const char * pszSQL, int iArgCount, ... );
+
 	bool Insert( const char * pszSQL, uint64_t * piId );
 	bool Query( const char * pszSQL, void * pclsData, bool (*FetchRow)( void *, MYSQL_ROW & sttRow ) );
 	bool QueryOne( const char * pszSQL, int & iData );
@@ -52,8 +54,6 @@ public:
 	bool Bind( int iIndex, const char * pszVal );
 	bool PrepareExecute( uint64_t * piId = NULL );
 	bool PrepareClose( );
-
-	bool Execute( const char * pszSQL, int iArgCount, ... );
 
 	uint64_t GetAffectedRow( );
 	uint32_t GetError();

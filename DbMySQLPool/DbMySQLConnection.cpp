@@ -90,6 +90,47 @@ bool CDbMySQLConnection::Execute( const char * pszSQL )
 
 /**
  * @ingroup DbMySQLPool
+ * @brief prepare statement 로 SQL INSERT, UPDATE, DELETE 명령을 수행한다.
+ * @param pszSQL		동적 SQL 문
+ * @param iArgCount Bind 인자 개수
+ * @param						Bind 인자
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLConnection::Execute( const char * pszSQL, int iArgCount, ... )
+{
+	bool bRes = false;
+	va_list pArgList;
+
+	if( Prepare( pszSQL ) == false ) return false;
+
+	va_start( pArgList, iArgCount );
+
+	for( int i = 0; i < iArgCount; ++i )
+	{
+		char * pszArg = va_arg( pArgList, char * );
+		if( pszArg == NULL )
+		{
+			CLog::Print( LOG_ERROR, "%s arg(%d) is NULL", __FUNCTION__, i );
+			PrepareClose( );
+			return false;
+		}
+		Bind( i, pszArg );
+	}
+
+	va_end( pArgList );
+
+	if( PrepareExecute( ) ) 
+	{
+		bRes = true;
+	}
+
+	PrepareClose( );
+
+	return bRes;
+}
+
+/**
+ * @ingroup DbMySQLPool
  * @brief INSERT 문의 실행한다.
  * @param pszSQL	SQL 문
  * @param piId		AUTO_INCREMENT 로 생성된 정수 저장 변수
@@ -602,47 +643,6 @@ bool CDbMySQLConnection::PrepareClose( )
 	m_clsBindList.clear();
 
 	return true;
-}
-
-/**
- * @ingroup DbMySQLPool
- * @brief prepare statement 로 SQL INSERT, UPDATE, DELETE 명령을 수행한다.
- * @param pszSQL		동적 SQL 문
- * @param iArgCount Bind 인자 개수
- * @param						Bind 인자
- * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
- */
-bool CDbMySQLConnection::Execute( const char * pszSQL, int iArgCount, ... )
-{
-	bool bRes = false;
-	va_list pArgList;
-
-	if( Prepare( pszSQL ) == false ) return false;
-
-	va_start( pArgList, iArgCount );
-
-	for( int i = 0; i < iArgCount; ++i )
-	{
-		char * pszArg = va_arg( pArgList, char * );
-		if( pszArg == NULL )
-		{
-			CLog::Print( LOG_ERROR, "%s arg(%d) is NULL", __FUNCTION__, i );
-			PrepareClose( );
-			return false;
-		}
-		Bind( i, pszArg );
-	}
-
-	va_end( pArgList );
-
-	if( PrepareExecute( ) ) 
-	{
-		bRes = true;
-	}
-
-	PrepareClose( );
-
-	return bRes;
 }
 
 /**

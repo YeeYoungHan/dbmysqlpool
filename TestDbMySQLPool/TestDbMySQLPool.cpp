@@ -4,6 +4,28 @@
 #include "Log.h"
 #include "MemoryDebug.h"
 
+class CTestData
+{
+public:
+	std::string m_strId;
+	std::string m_strName;
+};
+
+typedef std::list< CTestData > TEST_LIST;
+
+bool FetchTest( void * pclsData, MYSQL_ROW & sttRow )
+{
+	TEST_LIST * pclsList = (TEST_LIST *)pclsData;
+	CTestData clsRow;
+
+	clsRow.m_strId = sttRow[0];
+	clsRow.m_strName = sttRow[1];
+
+	pclsList->push_back( clsRow );
+
+	return true;
+}
+
 int main( int argc, char * argv[] )
 {
 	char * pszUserId, * pszPassWord, * pszDbName;
@@ -39,6 +61,16 @@ int main( int argc, char * argv[] )
 	// 동적 SQL 을 실행하여서 SELECT 한 결과 가져오는 예제
 	clsDB.QueryOne( "SELECT password(?)", "1234", strRes, 50 );
 	printf( "[%s]\n", strRes.c_str() );
+
+	// N 개의 컬럼 fetch 하는 방법
+	TEST_LIST clsList;
+	TEST_LIST::iterator itList;
+
+	clsDB.Query( "SELECT id, name FROM test", &clsList, FetchTest );
+	for( itList = clsList.begin(); itList != clsList.end(); ++itList )
+	{
+		printf( "id(%s) name(%s)\n", itList->m_strId.c_str(), itList->m_strName.c_str() );
+	}
 
 	clsDB.Close();
 

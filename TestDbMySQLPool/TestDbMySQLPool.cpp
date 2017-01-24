@@ -4,6 +4,7 @@
 #include "Log.h"
 #include "MemoryDebug.h"
 
+// fetch 된 항목을 저장하는 클래스
 class CTestData
 {
 public:
@@ -13,6 +14,7 @@ public:
 
 typedef std::list< CTestData > TEST_LIST;
 
+// 1 row 씩 fetch 할 때에 호출되는 callback 함수
 bool FetchTest( void * pclsData, MYSQL_ROW & sttRow )
 {
 	TEST_LIST * pclsList = (TEST_LIST *)pclsData;

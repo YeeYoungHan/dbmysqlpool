@@ -7,6 +7,9 @@
 CC=g++
 CFLAGS=-Wall -O2 -D_REENTRANT -g #-pg
 
+SYSTEM_BIT=$(shell getconf LONG_BIT)
+SYSTEM_LIB=/usr/lib
+
 ifeq ($(SYSTEM_BIT),64)
 	SYSTEM_LIB=/usr/lib64
 endif

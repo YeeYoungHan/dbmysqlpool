@@ -7,7 +7,7 @@
 include ../Makefile.mk
 
 INC=-I../DbMySQLPool -I../SipPlatform -I/usr/include/mysql
-LIB=-L../DbMySQLPool -ldbmysqlpool \
+LIB=-L../DbMySQLPool -ldbpool \
 	-L../SipPlatform -lsipplatform \
 	-lmysqlclient \
 	-ldl -lpthread

@@ -7,3 +7,11 @@
 CC=g++
 CFLAGS=-Wall -O2 -D_REENTRANT -g #-pg
 
+ifeq ($(SYSTEM_BIT),64)
+	SYSTEM_LIB=/usr/lib64
+endif
+
+# MySQL library path
+MYSQL_INC=-I/usr/include/mysql
+MYSQL_LIB=-L$(SYSTEM_LIB)/mysql -lmysqlclient
+

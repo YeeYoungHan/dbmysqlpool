@@ -6,10 +6,10 @@
 
 include ../Makefile.mk
 
-INC=-I../DbMySQLPool -I../SipPlatform -I/usr/include/mysql
+INC=-I../DbMySQLPool -I../SipPlatform $(MYSQL_INC)
 LIB=-L../DbMySQLPool -ldbpool \
 	-L../SipPlatform -lsipplatform \
-	-lmysqlclient \
+	$(MYSQL_LIB) \
 	-ldl -lpthread
 
 .SUFFIXES: .o .cpp

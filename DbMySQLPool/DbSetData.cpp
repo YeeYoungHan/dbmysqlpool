@@ -52,3 +52,54 @@ void DbSetData( MYSQL_ROW & sttRow, int & iCol, int & iData )
 
 	++iCol;
 }
+
+/**
+ * @ingroup DbPool
+ * @brief DB 에서 fetch 한 row 의 하나의 컬럼값을 저장한다.
+ * @param sttRow	MYSQL_ROW
+ * @param iCol		컬럼 인덱스. 함수 호출후, 컬럼 인덱스는 1 증가한다.
+ * @param iData		컬럼값 저장 변수
+ */
+void DbSetData( MYSQL_ROW & sttRow, int & iCol, uint32_t & iData )
+{
+	if( sttRow[iCol] )
+	{
+		iData = GetUInt32(sttRow[iCol]);
+	}
+
+	++iCol;
+}
+
+/**
+ * @ingroup DbPool
+ * @brief DB 에서 fetch 한 row 의 하나의 컬럼값을 저장한다.
+ * @param sttRow	MYSQL_ROW
+ * @param iCol		컬럼 인덱스. 함수 호출후, 컬럼 인덱스는 1 증가한다.
+ * @param iData		컬럼값 저장 변수
+ */
+void DbSetData( MYSQL_ROW & sttRow, int & iCol, int64_t & iData )
+{
+	if( sttRow[iCol] )
+	{
+		iData = atoll(sttRow[iCol]);
+	}
+
+	++iCol;
+}
+
+/**
+ * @ingroup DbPool
+ * @brief DB 에서 fetch 한 row 의 하나의 컬럼값을 저장한다.
+ * @param sttRow	MYSQL_ROW
+ * @param iCol		컬럼 인덱스. 함수 호출후, 컬럼 인덱스는 1 증가한다.
+ * @param iData		컬럼값 저장 변수
+ */
+void DbSetData( MYSQL_ROW & sttRow, int & iCol, uint64_t & iData )
+{
+	if( sttRow[iCol] )
+	{
+		iData = GetUInt64(sttRow[iCol]);
+	}
+
+	++iCol;
+}

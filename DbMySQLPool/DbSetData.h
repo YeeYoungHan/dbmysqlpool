@@ -23,5 +23,8 @@
 
 void DbSetData( MYSQL_ROW & sttRow, int & iCol, std::string & strData );
 void DbSetData( MYSQL_ROW & sttRow, int & iCol, int & iData );
+void DbSetData( MYSQL_ROW & sttRow, int & iCol, uint32_t & iData );
+void DbSetData( MYSQL_ROW & sttRow, int & iCol, int64_t & iData );
+void DbSetData( MYSQL_ROW & sttRow, int & iCol, uint64_t & iData );
 
 #endif

@@ -170,6 +170,10 @@
 				RelativePath=".\DbMySQLThread.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\DbSetData.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="헤더 파일"
@@ -194,6 +198,10 @@
 			</File>
 			<File
 				RelativePath=".\DbMySQLThread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DbSetData.h"
 				>
 			</File>
 		</Filter>

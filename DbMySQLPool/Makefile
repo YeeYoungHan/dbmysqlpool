@@ -15,7 +15,7 @@ INC=-I../SipPlatform -I/usr/include/mysql
 all: libdbpool.a
 
 LIB_OBJ=DbMySQLConnection.o DbMySQLPool.o \
-	DbMySQLQueue.o DbMySQLThread.o DbCheckSqlInjection.o
+	DbMySQLQueue.o DbMySQLThread.o DbCheckSqlInjection.o DbSetData.o
 
 libdbpool.a: $(LIB_OBJ)
 	$(AR) crv $@ $(LIB_OBJ)

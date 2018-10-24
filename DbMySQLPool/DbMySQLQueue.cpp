@@ -19,6 +19,7 @@
 #include "SipPlatformDefine.h"
 #include "DbMySQLQueue.h"
 #include "Log.h"
+#include <stdarg.h>
 #include "MemoryDebug.h"
 
 CDbMySQLQueue::CDbMySQLQueue() : m_iMaxSize(0)
@@ -38,6 +39,9 @@ CDbMySQLQueue::~CDbMySQLQueue()
 bool CDbMySQLQueue::Insert( const char * pszSQL )
 {
 	bool bRes = true;
+	CDbMySQLQueueData clsData;
+
+	clsData.m_strSQL = pszSQL;
 
 	m_clsMutex.acquire();
 	if( m_iMaxSize != 0 )
@@ -51,7 +55,62 @@ bool CDbMySQLQueue::Insert( const char * pszSQL )
 
 	if( bRes )
 	{
-		m_clsList.push_back( pszSQL );
+		m_clsList.push_back( clsData );
+		if( m_clsList.size() == 1 )
+		{
+			m_clsMutex.signal();
+		}
+	}
+	m_clsMutex.release();
+
+	return bRes;
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief 큐에 동적 SQL 문자열을 입력한다.
+ * @param pszSQL		SQL 문자열
+ * @param iArgCount	인자 개수
+ * @param ...				인자 리스트
+ * @returns 성공하면 true 를 리턴하고 그렇지 않으면 false 를 리턴한다.
+ */
+bool CDbMySQLQueue::Insert( const char * pszSQL, int iArgCount, ... )
+{
+	bool bRes = true;
+	va_list pArgList;
+	CDbMySQLQueueData clsData;
+
+	clsData.m_strSQL = pszSQL;
+
+	va_start( pArgList, iArgCount );
+
+	for( int i = 0; i < iArgCount; ++i )
+	{
+		char * pszArg = va_arg( pArgList, char * );
+		if( pszArg == NULL )
+		{
+			CLog::Print( LOG_ERROR, "%s arg(%d) is NULL", __FUNCTION__, i );
+			return false;
+		}
+
+		clsData.m_clsArgList.push_back( pszArg );
+	}
+
+	va_end( pArgList );
+
+	m_clsMutex.acquire();
+	if( m_iMaxSize != 0 )
+	{
+		if( (int)m_clsList.size() >= m_iMaxSize )
+		{
+			CLog::Print( LOG_ERROR, "%s queue size(%d) >= max size(%d) sql(%s) is dropped", __FUNCTION__, m_clsList.size(), m_iMaxSize, pszSQL );
+			bRes = false;
+		}
+	}
+
+	if( bRes )
+	{
+		m_clsList.push_back( clsData );
 		if( m_clsList.size() == 1 )
 		{
 			m_clsMutex.signal();
@@ -65,11 +124,11 @@ bool CDbMySQLQueue::Insert( const char * pszSQL )
 /**
  * @ingroup DbMySQLPool
  * @brief 큐에서 SQL 문자열을 가져온다.
- * @param strSQL	SQL 문자열 저장 변수
+ * @param clsData	SQL 문자열 등을 저장 변수
  * @param bWait		SQL 문자열이 존재할 때까지 대기하는가?
  * @returns SQL 문자열이 존재하면 true 를 리턴하고 그렇지 않으면 false 를 리턴한다.
  */
-bool CDbMySQLQueue::Select( std::string & strSQL, bool bWait )
+bool CDbMySQLQueue::Select( CDbMySQLQueueData & clsData, bool bWait )
 {
 	bool bRes = false;
 
@@ -84,7 +143,7 @@ bool CDbMySQLQueue::Select( std::string & strSQL, bool bWait )
 
 	if( m_clsList.size() > 0 )
 	{
-		strSQL = m_clsList.front();
+		clsData = m_clsList.front();
 		m_clsList.pop_front();
 		bRes = true;
 	}

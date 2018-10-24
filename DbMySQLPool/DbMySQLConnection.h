@@ -39,6 +39,7 @@ public:
 
 	bool Execute( const char * pszSQL );
 	bool Execute( const char * pszSQL, int iArgCount, ... );
+	bool Execute( const char * pszSQL, STRING_LIST & clsArgList );
 
 	bool Insert( const char * pszSQL, uint64_t * piId );
 	bool Query( const char * pszSQL, void * pclsData, bool (*FetchRow)( void *, MYSQL_ROW & sttRow ) );

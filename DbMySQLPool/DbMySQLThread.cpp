@@ -55,7 +55,7 @@ THREAD_API DbMySQLThread( LPVOID lpParameter )
 	CDbMySQLThreadArg * pclsArg = (CDbMySQLThreadArg *)lpParameter;
 	CDbMySQLConnection * pclsDbConn = pclsArg->m_pclsDbConn;
 	CDbMySQLQueue * pclsSqlQueue = pclsArg->m_pclsSqlQueue;
-	std::string	strSQL;
+	CDbMySQLQueueData clsData;
 
 	delete pclsArg;
 
@@ -67,9 +67,16 @@ THREAD_API DbMySQLThread( LPVOID lpParameter )
 	{
 		// SQL Queue 에서 무한 대기할 경우, 종료할 때에 signal 을 전송해 주어야 하므로 signal 을 전송하지 않기 위해서
 		// 20ms 간격으로 큐를 검사한다.
-		if( pclsSqlQueue->Select( strSQL, false ) )
+		if( pclsSqlQueue->Select( clsData, false ) )
 		{
-			pclsDbConn->Execute( strSQL.c_str() );
+			if( clsData.m_clsArgList.empty() )
+			{
+				pclsDbConn->Execute( clsData.m_strSQL.c_str(), true );
+			}
+			else
+			{
+				pclsDbConn->Execute( clsData.m_strSQL.c_str(), clsData.m_clsArgList );
+			}
 		}
 		else
 		{

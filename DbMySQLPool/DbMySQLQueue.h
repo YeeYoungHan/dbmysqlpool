@@ -20,10 +20,16 @@
 #define _DB_MYSQL_QUEUE_H_
 
 #include "SipMutex.h"
-#include <list>
-#include <string>
+#include "StringUtility.h"
 
-typedef std::list< std::string > DB_MYSQL_SQL_QUEUE;
+class CDbMySQLQueueData
+{
+public:
+	std::string m_strSQL;
+	STRING_LIST m_clsArgList;
+};
+
+typedef std::list< CDbMySQLQueueData > DB_MYSQL_SQL_QUEUE;
 
 /**
  * @ingroup DbMySQLPool
@@ -36,7 +42,8 @@ public:
 	~CDbMySQLQueue();
 
 	bool Insert( const char * pszSQL );
-	bool Select( std::string & strSQL, bool bWait = true );
+	bool Insert( const char * pszSQL, int iArgCount, ... );
+	bool Select( CDbMySQLQueueData & clsData, bool bWait = true );
 
 	int GetSize( );
 

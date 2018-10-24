@@ -658,6 +658,48 @@ bool CDbMySQLConnection::Execute( const char * pszSQL, int iArgCount, ... )
 
 /**
  * @ingroup DbMySQLPool
+ * @brief prepare statement 로 SQL INSERT, UPDATE, DELETE 명령을 수행한다.
+ * @param pszSQL			동적 SQL 문
+ * @param clsArgList	Bind 인자 리스트
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CDbMySQLConnection::Execute( const char * pszSQL, STRING_LIST & clsArgList )
+{
+	bool bRes = false, bError = false;
+	STRING_LIST::iterator itList;
+	int iIndex = 0;
+
+	if( Prepare( pszSQL ) == false ) return false;
+
+	for( itList = clsArgList.begin(); itList != clsArgList.end(); ++itList )
+	{
+		if( Bind( iIndex, itList->c_str() ) == false )
+		{
+			bError = true;
+			break;
+		}
+
+		++iIndex;
+	}
+
+	if( bError )
+	{
+		PrepareClose( );
+		return false;
+	}
+
+	if( PrepareExecute( ) ) 
+	{
+		bRes = true;
+	}
+
+	PrepareClose( );
+
+	return bRes;
+}
+
+/**
+ * @ingroup DbMySQLPool
  * @brief It returns the number of rows changed, deleted, or inserted by the last statement if it was an UPDATE, DELETE, or INSERT.
  * @returns An integer greater than zero indicates the number of rows affected or retrieved. Zero indicates that no records were updated for an UPDATE statement, no rows matched the WHERE clause in the query or that no query has yet been executed. -1 indicates that the query returned an error 
  */

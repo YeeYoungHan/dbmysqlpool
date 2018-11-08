@@ -18,6 +18,9 @@ C++ STL 기반으로 MySQL DB pool 개발 프로젝트입니다.
 ### DB pool 사용법
 아래의 블로그 포스트에 DB pool 사용법이 기술되어 있습니다.
 
-* http://blog.naver.com/websearch/220909953904
-* http://blog.naver.com/websearch/220918790404
-* http://blog.naver.com/websearch/220918799383
+* https://blog.naver.com/websearch/220909953904 : C++ MySQL DB pool 라이브러리
+* https://blog.naver.com/websearch/220918790404 : N 개 컬럼 fetch 하는 방법
+* https://blog.naver.com/websearch/220918799383 : 동적 SQL 문 실행하는 방법
+* https://blog.naver.com/websearch/220919689037 : C++ MySQL DB pool 의 장점
+* https://blog.naver.com/websearch/221146053989 : N 개 컬럼 fetch 하면서 컬럼 NULL 체크하는 방법
+* https://blog.naver.com/websearch/221384048874 : INSERT, UPDATE, DELETE SQL 큐 생성 및 큐 쓰레드 생성 방법

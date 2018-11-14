@@ -16,41 +16,43 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
  */
 
-#ifndef _MONITOR_CALLBACK_H_
-#define _MONITOR_CALLBACK_H_
+#ifndef _MYSQL_SLAVE_OVERWATCHER_SETUP_H_
+#define _MYSQL_SLAVE_OVERWATCHER_SETUP_H_
 
-#include "MonitorString.h"
+#include <string>
 
 /**
- * @brief 서버 모니터링 요청 이벤트 callback 인터페이스
+ * @ingroup MySQLSlaveOverWatcher
+ * @brief IP-PBX 정보 저장 클래스
  */
-class IMonitorCallBack
+class CMySQLSlaveOverWatcherSetup
 {
 public:
-	IMonitorCallBack() : m_iMonitorPort(0), m_bIpv6(false)
-	{
-	}
+	CMySQLSlaveOverWatcherSetup();
+	~CMySQLSlaveOverWatcherSetup();
 
-	virtual ~IMonitorCallBack(){};
+	bool Read( const char * pszFileName );
 
-	/**
-	 * @brief 서버 모니터링 요청 명령 수신 이벤트 핸들러
-	 * @param pszRequest	요청 명령 문자열
-	 * @param strResponse 응답 문자열 저장 변수
-	 * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
-	 */
-	virtual bool RecvRequest( const char * pszRequest, CMonitorString & strResponse ) = 0;
 
-	/**
-	 * @brief 허용된 클라이언트인가?
-	 * @param pszIp 클라이언트 IP 주소
-	 * @returns 허용된 클라이언트이면 true 를 리턴하고 그렇지 않으면 false 를 리턴한다.
-	 */
-	virtual bool IsMonitorIp( const char * pszIp ) = 0;
+	// ================================================================
+	// DB 설정
 
-	int		m_iMonitorPort;
+	/** DB IP 주소 */
+	std::string		m_strDbHost;
 
-	bool	m_bIpv6;
+	/** DB 포트 번호 */
+	int						m_iDbPort;
+
+	/** DB 사용자 아이디 */
+	std::string		m_strDbUserId;
+
+	/** DB 사용자 비밀번호 */
+	std::string		m_strDbPassWord;
+
+	/** DB 이름 */
+	std::string		m_strDbName;
 };
+
+extern CMySQLSlaveOverWatcherSetup gclsSetup;
 
 #endif

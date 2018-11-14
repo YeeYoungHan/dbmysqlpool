@@ -16,13 +16,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
  */
 
-#ifndef _SERVER_THREAD_H_
-#define _SERVER_THREAD_H_
+#ifndef _MYSQL_SLAVE_OVERWATCHER_VERSION_H_
+#define _MYSQL_SLAVE_OVERWATCHER_VERSION_H_
 
-#include "SipTcp.h"
-#include "MonitorCallBack.h"
+#define MYSQL_SLAVE_OVERWATCHER_VERSION "0.01"
 
-// MonitorThread.cpp
-bool StartMonitorThread( Socket hSocket, const char * pszIp, int iPort, IMonitorCallBack * pclsCallBack );
+/* 버전 정보
+
+= 버전 0.01 ( 2018년 11월 14일 ) =
+ * 최초 버전
+
+*/
 
 #endif

@@ -311,26 +311,6 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="모니터링"
-			>
-			<File
-				RelativePath=".\MonitorCallBack.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MonitorThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ServerThread.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\ServerThread.h"
-				>
-			</File>
-		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

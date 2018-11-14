@@ -20,7 +20,6 @@
 #define _SERVER_SERVICE_H_
 
 #include <string>
-#include "MonitorCallBack.h"
 
 /**
  * @ingroup ServerPlatform
@@ -63,10 +62,5 @@ extern bool gbStop;
 int ServerMain( int argc, char * argv[], CServerService & clsService, ServerFunc pFunc );
 const char * GetConfigFileName();
 void ServerSignal();
-
-bool IsMonitorThreadRun();
-
-// ServerThread.cpp
-bool StartMonitorServerThread( IMonitorCallBack * pclsCallBack );
 
 #endif

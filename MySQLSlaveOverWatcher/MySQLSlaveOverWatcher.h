@@ -20,10 +20,10 @@
 #define _MYSQL_SLAVE_OVERWATCHER_H_
 
 // MS 윈도우 서비스 선언
-#define SERVICE_NAME								"MySQLSlaveOverWathcher"		// 서비스 이름
-#define SERVICE_DISPLAY_NAME				"MySQLSlaveOverWathcher"
-#define SERVICE_DESCRIPTION_STRING	"MySQLSlaveOverWathcher - made by Yee Young Han"
+#define SERVICE_NAME								"MySQLSlaveOverWatcher"		// 서비스 이름
+#define SERVICE_DISPLAY_NAME				"MySQLSlaveOverWatcher"
+#define SERVICE_DESCRIPTION_STRING	"MySQLSlaveOverWatcher - made by Yee Young Han"
 
-#define CONFIG_FILENAME							"MySQLSlaveOverWathcher.xml"
+#define CONFIG_FILENAME							"MySQLSlaveOverWatcher.xml"
 
 #endif

@@ -1,6 +1,6 @@
 #!/bin/sh
 #------------------------------------------------------------------------------
-# MySQLSlaveOverwatcher start/stop script 
+# MySQLSlaveOverWatcher start/stop script 
 #------------------------------------------------------------------------------
 # programmer : yee young han ( websearch@naver.com )
 #------------------------------------------------------------------------------
@@ -12,10 +12,10 @@
 
 # program directory
 root_dir=/home/websearch/OpenProject/DbMySQLPool/MySQLSlaveOverWatcher
-program="MySQLSlaveOverwatcher.exe"
+program="MySQLSlaveOverWatcher.exe"
 program_list="$program"
-program_arg="$root_dir/MySQLSlaveOverwatcher.xml"
-program_name="MySQLSlaveOverwatcher"
+program_arg="$root_dir/MySQLSlaveOverWatcher.xml"
+program_name="MySQLSlaveOverWatcher"
 logfile=$root_dir/mysqlslaveoverwatcherdog.log
 this_script=mysqlslaveoverwatcher.sh
 

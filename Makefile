@@ -22,3 +22,6 @@ clean:
 
 install:
 
+zip:
+	cd MySQLSlaveOverWatcher && make zip
+

@@ -31,3 +31,6 @@ clean:
 	rm -f *.o
 	rm -f core.*
 
+zip:
+	./publish.sh
+

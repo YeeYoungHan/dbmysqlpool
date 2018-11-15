@@ -31,7 +31,9 @@
 		<PassWord>password</PassWord>
 		<!-- MySQL replication slave 동작 상태를 검사하는 주기 (초단위) -->
 		<WatchPeriod>60</WatchPeriod>
-		<!-- MySQL replication slave 동작 상태에 오류가 감지된 경우, 해당 SQL 오류를 무시한 후 MySQL replication slave 를 재시작하고 다시 MySQL replication slave 동작 상태를 검사하는 주기 (ms 단위) -->
+		<!-- MySQL replication slave 동작 상태에 오류가 감지된 경우, 해당 SQL 오류를 무시한 후
+		     MySQL replication slave 를 재시작하고 다시 MySQL replication slave 동작 상태를 
+		     검사하는 주기 (ms 단위) -->
 		<ReWatchPeriod>20</ReWatchPeriod>
 	</Db>
 	<Log>
@@ -63,7 +65,7 @@ mysqlslaveoverwatcher.sh 스크립트로 MySQLSlaveOverWatcher.exe 프로그램�
 # ./mysqlslaveoverwatcher.sh start
 ```
 
-mysqlslaveoverwatcher.sh 스크립트로 MySQLSlaveOverWatcher.exe 프로그램을 종하는 방법은 다음과 같습니다.
+mysqlslaveoverwatcher.sh 스크립트로 MySQLSlaveOverWatcher.exe 프로그램을 종료하는 방법은 다음과 같습니다.
 
 ```
 # ./mysqlslaveoverwatcher.sh stop

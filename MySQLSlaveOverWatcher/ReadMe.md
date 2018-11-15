@@ -3,6 +3,8 @@
 ### 개요
 
 * MySQL replication slave 에서 SQL 오류가 발생한 경우, 해당 SQL 오류를 무시한 후 MySQL replication slave 를 재시작하는 서비스 프로그램
+* 해당 SQL 오류 무시 및 MySQL replication slave 를 재시작하는 방법은 아래의 포스트를 참고하세요.
+  * https://blog.naver.com/websearch/221079433407
 
 ### 개발자 정보
 
@@ -31,3 +33,18 @@ MySQLSlaveOverWatcher.exe 프로그램을 윈도우 서비스로 인스톨하는
 ```
 dos> MySQLSlaveOverWatcher.exe -i
 ```
+
+* 윈도우 서비스에서 MySQLSlaveOverWatcher 를 시작하면 MySQLSlaveOverWatcher 서비스가 시작됩니다.
+
+### 윈도우 서비스로 언인스톨 방법
+MySQLSlaveOverWatcher.exe 프로그램을 윈도우 서비스에서 언인스톨하는 방법은 다음과 같습니다.
+
+* 관리자 권한으로 도스창을 실행한다.
+* 도스창에서 MySQLSlaveOverWatcher.exe 설치 폴더로 이동한다.
+
+* 아래와 같이 실행한다.
+
+```
+dos> MySQLSlaveOverWatcher.exe -u
+```
+

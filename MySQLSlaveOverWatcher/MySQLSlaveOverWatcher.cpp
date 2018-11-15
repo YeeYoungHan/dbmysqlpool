@@ -22,10 +22,72 @@
 #include "MySQLSlaveOverWatcherVersion.h"
 #include "ServerService.h"
 #include "ServerUtility.h"
+#include "TimeUtility.h"
 #include "Log.h"
+#include "DbMySQLConnection.h"
 #include "MemoryDebug.h"
 
 bool gbFork = true;
+
+class CSlaveStatus
+{
+public:
+	CSlaveStatus() : m_iLastErrNo(0)
+	{
+	}
+
+	std::string m_strSlaveIORunning;
+	std::string m_strSlaveSQLRunning;
+	int					m_iLastErrNo;
+	std::string m_strLastError;
+};
+
+bool FetchStatus( void * pclsData, MYSQL_ROW & sttRow )
+{
+	CSlaveStatus * pclsStatus = (CSlaveStatus *)pclsData;
+
+	if( sttRow[10] ) pclsStatus->m_strSlaveIORunning = sttRow[10];
+	if( sttRow[11] ) pclsStatus->m_strSlaveSQLRunning = sttRow[11];
+	if( sttRow[18] ) pclsStatus->m_iLastErrNo = atoi( sttRow[18] );
+	if( sttRow[19] ) pclsStatus->m_strLastError = sttRow[19];
+
+	return true;
+}
+
+/**
+ * @ingroup MySQLSlaveOverWatcher
+ * @brief replication slave 가 SQL 문 오류로 정상 동작하지 않으면 오류가 발생한 SQL 문을 skip 한 후, replication slave 를 재시작한다.
+ * @param clsDB MySQL DB 객체
+ * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
+ */
+bool CheckSlave( CDbMySQLConnection & clsDB )
+{
+	CLog::Print( LOG_DEBUG, "%s is started", __FUNCTION__ );
+
+	while( 1 )
+	{
+		CSlaveStatus clsStatus;
+
+		clsDB.Query( "SHOW SLAVE STATUS", &clsStatus, FetchStatus );
+
+		if( clsStatus.m_iLastErrNo == 0 ) break;
+
+		CLog::Print( LOG_ERROR, " Slave_IO_Running: %s", clsStatus.m_strSlaveIORunning.c_str() );
+		CLog::Print( LOG_ERROR, "Slave_SQL_Running: %s", clsStatus.m_strSlaveSQLRunning.c_str() );
+		CLog::Print( LOG_ERROR, "       Last_Errno: %d", clsStatus.m_iLastErrNo );
+		CLog::Print( LOG_ERROR, "       Last_Error: %s", clsStatus.m_strLastError.c_str() );
+
+		clsDB.Execute( "STOP SLAVE" );
+		clsDB.Execute( "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1" );
+		clsDB.Execute( "START SLAVE" );
+
+		MiliSleep( gclsSetup.m_iDbReWatchPeriod );
+	}
+
+	CLog::Print( LOG_DEBUG, "%s is terminated", __FUNCTION__ );
+
+	return true;
+}
 
 /**
  * @ingroup MySQLSlaveOverWatcher
@@ -50,12 +112,28 @@ int ServiceMain( )
 	SetCoreDumpEnable();
 	ServerSignal();
 
+	CDbMySQLConnection clsDB;
 	int iSecond = 0;
+
+	clsDB.Connect( gclsSetup.m_strDbHost.c_str(), gclsSetup.m_strDbUserId.c_str(), gclsSetup.m_strDbPassWord.c_str(), "", gclsSetup.m_iDbPort );
+
+	CheckSlave( clsDB );
 
 	while( gbStop == false )
 	{
 		sleep(1);
 		++iSecond;
+
+		if( iSecond == gclsSetup.m_iDbWatchPeriod )
+		{
+			CheckSlave( clsDB );
+			iSecond = 0;
+		}
+
+		if( gclsSetup.IsChange() )
+		{
+			gclsSetup.Read();
+		}
 	}
 
 	CLog::Print( LOG_SYSTEM, "MySQLSlaveOverWatcher is terminated" );

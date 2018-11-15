@@ -1,0 +1,14 @@
+<MySQLSlaveOverWatcher>
+	<Db>
+		<Host>127.0.0.1</Host>
+		<Port>3306</Port>
+		<UserId>user</UserId>
+		<PassWord>password</PassWord>
+		<WatchPeriod>60</WatchPeriod>
+		<ReWatchPeriod>20</ReWatchPeriod>
+	</Db>
+	<Log>
+		<Folder>c:\temp\mysqlslave</Folder>
+		<Level Debug="true" Sql="true"></Level>
+	</Log>
+</MySQLSlaveOverWatcher>

@@ -19,7 +19,7 @@
 #ifndef _MYSQL_SLAVE_OVERWATCHER_SETUP_H_
 #define _MYSQL_SLAVE_OVERWATCHER_SETUP_H_
 
-#include <string>
+#include "XmlElement.h"
 
 /**
  * @ingroup MySQLSlaveOverWatcher
@@ -32,7 +32,8 @@ public:
 	~CMySQLSlaveOverWatcherSetup();
 
 	bool Read( const char * pszFileName );
-
+	bool Read();
+	bool IsChange();
 
 	// ================================================================
 	// DB 설정
@@ -49,8 +50,19 @@ public:
 	/** DB 사용자 비밀번호 */
 	std::string		m_strDbPassWord;
 
-	/** DB 이름 */
-	std::string		m_strDbName;
+	/** DB 감시 주기 (초단위) */
+	int						m_iDbWatchPeriod;
+
+	/** DB replication 오류가 감지된 경우, 오류 조치 후, 다시 검사하는 주기 (ms 단위) */
+	int						m_iDbReWatchPeriod;
+
+private:
+	bool Read( CXmlElement & clsXml );
+	void SetFileSizeTime( );
+
+	std::string	m_strFileName;	// 설정 파일 이름
+	time_t			m_iFileTime;		// 설정 파일 저장 시간
+	int					m_iFileSize;		// 설정 파일 크기
 };
 
 extern CMySQLSlaveOverWatcherSetup gclsSetup;

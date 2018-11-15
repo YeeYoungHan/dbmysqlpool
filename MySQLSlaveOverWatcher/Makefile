@@ -32,6 +32,7 @@ clean:
 	rm -f core.*
 
 zip:
+	chmod +x mysqlslaveoverwatcher.sh
 	chmod +x publish.sh
 	./publish.sh
 

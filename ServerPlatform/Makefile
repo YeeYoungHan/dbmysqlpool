@@ -14,8 +14,7 @@ INC=-I../SipStack -I../SipParser -I../SipPlatform
 
 all: libserverplatform.a
 
-LIB_OBJ=ServerMain.o ServerSignal.o ServerService.o \
-	ServerThread.o MonitorThread.o
+LIB_OBJ=ServerMain.o ServerSignal.o ServerService.o
 
 libserverplatform.a: $(LIB_OBJ)
 	ar crv $@ $(LIB_OBJ)

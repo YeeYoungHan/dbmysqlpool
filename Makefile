@@ -8,11 +8,17 @@ all:
 	cd SipPlatform && make
 	cd DbMySQLPool && make
 	cd TestDbMySQLPool && make
+	cd ServerPlatform && make
+	cd XmlParser && make
+	cd MySQLSlaveOverWatcher && make
 
 clean:
 	cd SipPlatform && make clean
 	cd DbMySQLPool && make clean
 	cd TestDbMySQLPool && make clean
+	cd ServerPlatform && make clean
+	cd XmlParser && make clean
+	cd MySQLSlaveOverWatcher && make clean
 
 install:
 

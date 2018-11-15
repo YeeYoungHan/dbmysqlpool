@@ -50,6 +50,25 @@ MySQLSlaveOverWatcher.exe 프로그램을 도스창 또는 리눅스 터미널�
 dos> MySQLSlaveOverWatcher.exe c:\MySQLSlaveOverWatcher\MySQLSlaveOverWatcher.xml
 ```
 
+### 리눅스 실행 방법
+mysqlslaveoverwatcher.sh 스크립트에서 아래의 내용을 수정하면 mysqlslaveoverwatcher.sh 스크립트로 리눅스에서 MySQLSlaveOverWatcher.exe 프로그램을 시작/종료할 수 있습니다.
+
+```
+root_dir=/home/websearch/OpenProject/DbMySQLPool/MySQLSlaveOverWatcher
+```
+
+mysqlslaveoverwatcher.sh 스크립트로 MySQLSlaveOverWatcher.exe 프로그램을 시작하는 방법은 다음과 같습니다.
+
+```
+# ./mysqlslaveoverwatcher.sh start
+```
+
+mysqlslaveoverwatcher.sh 스크립트로 MySQLSlaveOverWatcher.exe 프로그램을 종하는 방법은 다음과 같습니다.
+
+```
+# ./mysqlslaveoverwatcher.sh stop
+```
+
 ### 윈도우 서비스로 인스톨 방법
 MySQLSlaveOverWatcher.exe 프로그램을 윈도우 서비스로 인스톨하는 방법은 다음과 같습니다.
 

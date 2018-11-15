@@ -15,6 +15,18 @@ C++ STL 기반으로 MySQL DB pool 개발 프로젝트입니다.
 
 * 본 프로젝트의 라이선스는 GPLv3 이고 기업용 라이선스는 websearch@naver.com 으로 문의해 주세요.
 
+### 빌드 방법
+
+* 윈도우
+  * VC++ 2008 로 DbMySQLPool.sln 파일을 열어서 빌드한다.
+
+* 리눅스
+  * C++, mysqlclient 라이브러리를 인스톨한 후, 아래와 같이 실행하여서 빌드한다.
+
+```
+# make
+```
+
 ### DB pool 사용법
 아래의 블로그 포스트에 DB pool 사용법이 기술되어 있습니다.
 

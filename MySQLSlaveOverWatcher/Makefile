@@ -32,5 +32,6 @@ clean:
 	rm -f core.*
 
 zip:
+	chmod +x publish.sh
 	./publish.sh
 

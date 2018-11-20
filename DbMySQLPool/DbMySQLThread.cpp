@@ -105,9 +105,10 @@ THREAD_API DbMySQLThread( LPVOID lpParameter )
  * @param pszPassWord MySQL 접속 아이디의 비밀번호
  * @param pszDbName		MySQL 접속 데이터베이스 이름
  * @param iPort				MySQL 접속 포트 번호
+ * @param pszCharacterSet	character set
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
  */
-bool StartDbMySQLThread( int iThreadCount, CDbMySQLQueue * pclsSqlQueue, const char * pszHost, const char * pszUserId, const char * pszPassWord, const char * pszDbName, int iPort )
+bool StartDbMySQLThread( int iThreadCount, CDbMySQLQueue * pclsSqlQueue, const char * pszHost, const char * pszUserId, const char * pszPassWord, const char * pszDbName, int iPort, const char * pszCharacterSet )
 {
 	bool bError = false;
 
@@ -120,7 +121,7 @@ bool StartDbMySQLThread( int iThreadCount, CDbMySQLQueue * pclsSqlQueue, const c
 			break;
 		}
 
-		pclsDbConn->Connect( pszHost, pszUserId, pszPassWord, pszDbName, iPort );
+		pclsDbConn->Connect( pszHost, pszUserId, pszPassWord, pszDbName, iPort, pszCharacterSet );
 
 		if( StartDbMySQLThread( pclsDbConn, pclsSqlQueue ) == false )
 		{

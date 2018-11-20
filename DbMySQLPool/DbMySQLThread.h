@@ -22,7 +22,7 @@
 #include "DbMySQLConnection.h"
 #include "DbMySQLQueue.h"
 
-bool StartDbMySQLThread( int iThreadCount, CDbMySQLQueue * pclsSqlQueue, const char * pszHost, const char * pszUserId, const char * pszPassWord, const char * pszDbName, int iPort );
+bool StartDbMySQLThread( int iThreadCount, CDbMySQLQueue * pclsSqlQueue, const char * pszHost, const char * pszUserId, const char * pszPassWord, const char * pszDbName, int iPort, const char * pszCharacterSet = NULL );
 bool StartDbMySQLThread( CDbMySQLConnection * pclsDbConn, CDbMySQLQueue * pclsSqlQueue );
 void StopDbMySQLThread( );
 bool IsDbMySQLThreadRun( );

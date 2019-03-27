@@ -28,7 +28,7 @@
 #pragma comment( lib, "mysqlclient" )
 #endif
 
-CDbMySQLConnection::CDbMySQLConnection() : m_bConnected(false), m_psttStmt(NULL), m_psttBind(NULL), m_iBindCount(0)
+CDbMySQLConnection::CDbMySQLConnection() : m_bConnected(false), m_psttStmt(NULL), m_psttBind(NULL), m_iBindCount(0), m_iReadTimeout(0), m_iWriteTimeout(0)
 {
 }
 
@@ -405,6 +405,16 @@ bool CDbMySQLConnection::Connect( )
 		CLog::Print( LOG_ERROR, "%s mysql_init error", __FUNCTION__ );
 		return false;
 	}
+
+	if( m_iReadTimeout > 0 )
+	{
+		mysql_options( &m_sttMySQL, MYSQL_OPT_READ_TIMEOUT, (char *)&m_iReadTimeout );
+	}
+
+	if( m_iWriteTimeout > 0 )
+	{
+		mysql_options( &m_sttMySQL, MYSQL_OPT_WRITE_TIMEOUT, (char *)&m_iWriteTimeout );
+	}
 	
 	if( mysql_real_connect( &m_sttMySQL, m_strDbHost.c_str(), m_strDbUserId.c_str(), m_strDbPassWord.c_str(), m_strDbName.c_str(), m_iPort, NULL, 0 ) == NULL )
 	{
@@ -742,6 +752,32 @@ bool CDbMySQLConnection::IsExistTable( const char * pszTableName )
 	if( iCount == 1 ) return true;
 
 	return false;
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief MySQL read timeout 시간을 설정한다. 본 메소드는 Connect() 메소드를 호출하기 전에 호출해야 유효하다.
+ * @param iSecond MySQL read timeout 시간 (초단위)
+ */
+void CDbMySQLConnection::SetReadTimeout( int iSecond )
+{
+	if( iSecond > 0 )
+	{
+		m_iReadTimeout = iSecond;
+	}
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief MySQL write timeout 시간을 설정한다. 본 메소드는 Connect() 메소드를 호출하기 전에 호출해야 유효하다.
+ * @param iSecond MySQL write timeout 시간 (초단위)
+ */
+void CDbMySQLConnection::SetWriteTimeout( int iSecond )
+{
+	if( iSecond > 0 )
+	{
+		m_iWriteTimeout = iSecond;
+	}
 }
 
 /**

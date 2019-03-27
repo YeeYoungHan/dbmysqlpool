@@ -60,11 +60,16 @@ public:
 	bool QueryOne( const char * pszSQL, int64_t & iData );
 	bool QueryOne( const char * pszSQL, std::string & strData );
 
+	void SetReadTimeout( int iSecond );
+	void SetWriteTimeout( int iSecond );
+
 private:
 	CSipMutex	m_clsMutex;
 	DB_CONNECTION_LIST m_clsStandByList;
 	DB_CONNECTION_MAP m_clsUseMap;
 	bool m_bDestroy;
+	int m_iReadTimeout;
+	int m_iWriteTimeout;
 };
 
 #endif

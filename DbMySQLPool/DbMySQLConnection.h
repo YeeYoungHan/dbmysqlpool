@@ -60,6 +60,9 @@ public:
 	uint32_t GetError();
 	bool IsExistTable( const char * pszTableName );
 
+	void SetReadTimeout( int iSecond );
+	void SetWriteTimeout( int iSecond );
+
 	static void Final( );
 
 private:
@@ -76,6 +79,9 @@ private:
 	MYSQL_BIND * m_psttBind;
 	int m_iBindCount;
 	STRING_VECTOR m_clsBindList;
+
+	int m_iReadTimeout;
+	int m_iWriteTimeout;
 
 	bool Query( const char * pszSQL );
 	bool Connect( );

@@ -22,7 +22,7 @@
 #include "Log.h"
 #include "MemoryDebug.h"
 
-CDbMySQLPool::CDbMySQLPool() : m_bDestroy(false)
+CDbMySQLPool::CDbMySQLPool() : m_bDestroy(false), m_iReadTimeout(0), m_iWriteTimeout(0)
 {
 }
 
@@ -59,6 +59,9 @@ bool CDbMySQLPool::Create( int iPoolCount, const char * pszHost, const char * ps
 			bError = true;
 			break;
 		}
+
+		pclsDB->SetReadTimeout( m_iReadTimeout );
+		pclsDB->SetWriteTimeout( m_iWriteTimeout );
 
 		if( pclsDB->Connect( pszHost, pszUserId, pszPassWord, pszDbName, iPort, pszCharacterSet ) == false )
 		{
@@ -302,4 +305,30 @@ bool CDbMySQLPool::QueryOne( const char * pszSQL, std::string & strData )
 	if( Select( &clsData.m_pclsData ) == false ) return false;
 
 	return clsData.m_pclsData->QueryOne( pszSQL, strData );
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief MySQL read timeout 시간을 설정한다. 본 메소드는 Connect() 메소드를 호출하기 전에 호출해야 유효하다.
+ * @param iSecond MySQL read timeout 시간 (초단위)
+ */
+void CDbMySQLPool::SetReadTimeout( int iSecond )
+{
+	if( iSecond > 0 )
+	{
+		m_iReadTimeout = iSecond;
+	}
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief MySQL write timeout 시간을 설정한다. 본 메소드는 Connect() 메소드를 호출하기 전에 호출해야 유효하다.
+ * @param iSecond MySQL write timeout 시간 (초단위)
+ */
+void CDbMySQLPool::SetWriteTimeout( int iSecond )
+{
+	if( iSecond > 0 )
+	{
+		m_iWriteTimeout = iSecond;
+	}
 }

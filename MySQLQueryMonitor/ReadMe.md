@@ -30,6 +30,8 @@
 		<PassWord>password</PassWord>
 		<!-- MySQL 쿼리 모니터링 주기 (초단위) -->
 		<MonitorPeriod>1</MonitorPeriod>
+		<!-- 화면에 보여줄 SQL 문의 최대 개 -->
+		<MaxQueryCount>10</MaxQueryCount>
 	</Db>
 </MySQLQueryMonitor>
 ```

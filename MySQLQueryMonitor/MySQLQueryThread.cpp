@@ -87,7 +87,12 @@ THREAD_API MySQLQueryThread( LPVOID lpParameter )
 				if( gbStop ) break;
 			}
 		}
+
+		clsDB.Close();
 	}
+
+	mysql_thread_end();
+	mysql_library_end();
 
 	gbRun = false;
 

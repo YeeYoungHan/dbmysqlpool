@@ -19,6 +19,7 @@
 #include "stdafx.h"
 #include "MySQLQueryMonitor.h"
 #include "MySQLQueryMonitorDlg.h"
+#include "SqlDlg.h"
 #include "QueryTimeList.h"
 
 #ifdef _DEBUG
@@ -87,6 +88,8 @@ BEGIN_MESSAGE_MAP(CMySQLQueryMonitorDlg, CDialog)
 	ON_BN_CLICKED(IDCANCEL, &CMySQLQueryMonitorDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_START, &CMySQLQueryMonitorDlg::OnBnClickedStart)
 	ON_MESSAGE(WM_MYSQL_QUERY_THREAD, &CMySQLQueryMonitorDlg::OnMySQLQueryThread)
+	ON_BN_CLICKED(IDC_CLEAR, &CMySQLQueryMonitorDlg::OnBnClickedClear)
+	ON_NOTIFY(NM_DBLCLK, IDC_SQL_LIST, &CMySQLQueryMonitorDlg::OnNMDblclkSqlList)
 END_MESSAGE_MAP()
 
 
@@ -221,6 +224,12 @@ void CMySQLQueryMonitorDlg::OnBnClickedStart()
 	}
 }
 
+void CMySQLQueryMonitorDlg::OnBnClickedClear()
+{
+	gclsQueryTimeList.DeleteAll();
+	m_clsSQLList.DeleteAllItems();
+}
+
 LRESULT CMySQLQueryMonitorDlg::OnMySQLQueryThread( WPARAM wParam, LPARAM lParam )
 {
 	bool bError = false;
@@ -270,4 +279,19 @@ LRESULT CMySQLQueryMonitorDlg::OnMySQLQueryThread( WPARAM wParam, LPARAM lParam 
 	}
 
 	return 0;
+}
+
+void CMySQLQueryMonitorDlg::OnNMDblclkSqlList(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	
+	if( pNMItemActivate && pNMItemActivate->iItem >= 0 )
+	{
+		CSqlDlg clsDlg;
+
+		clsDlg.m_strSQL = m_clsSQLList.GetItemText( pNMItemActivate->iItem, 1 );
+		clsDlg.DoModal();
+	}
+
+	*pResult = 0;
 }

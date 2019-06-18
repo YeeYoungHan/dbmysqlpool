@@ -35,11 +35,13 @@ protected:
 public:
 	CButton m_btnStart;
 	CListCtrl m_clsSQLList;
+	CString m_strTime;
 
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnBnClickedStart();
+	afx_msg void OnBnClickedClear();
 
 	LRESULT afx_msg OnMySQLQueryThread( WPARAM wParam, LPARAM lParam );
-	CString m_strTime;
+	afx_msg void OnNMDblclkSqlList(NMHDR *pNMHDR, LRESULT *pResult);
 };

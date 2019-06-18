@@ -31,4 +31,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedStart();
+
+	LRESULT afx_msg OnMySQLQueryThread( WPARAM wParam, LPARAM lParam );
 };

@@ -198,10 +198,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\MySQLQueryMonitorSetup.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -236,10 +232,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\MySQLQueryMonitorSetup.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
@@ -270,10 +262,38 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt"
+		<Filter
+			Name="자료구조"
 			>
-		</File>
+			<File
+				RelativePath=".\QueryTimeList.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\QueryTimeList.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="설정파일"
+			>
+			<File
+				RelativePath=".\MySQLQueryMonitorSetup.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MySQLQueryMonitorSetup.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="쓰레드"
+			>
+			<File
+				RelativePath=".\MySQLQueryThread.cpp"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 		<Global

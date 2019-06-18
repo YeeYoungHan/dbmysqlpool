@@ -16,6 +16,34 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
  */
 
-#include "stdafx.h"
+#pragma once
 
+#include <string>
+#include <list>
+#include "SipMutex.h"
 
+class CQueryTime
+{
+public:
+	std::string m_strSQL;
+	int m_iSecond;
+};
+
+typedef std::list< CQueryTime > QUERY_TIME_LIST;
+
+class CQueryTimeList
+{
+public:
+	CQueryTimeList();
+	~CQueryTimeList();
+
+	void Insert( QUERY_TIME_LIST & clsList );
+	void Select( QUERY_TIME_LIST & clsList );
+	void DeleteAll();
+
+private:
+	void Insert( CQueryTime & clsQT );
+
+	QUERY_TIME_LIST m_clsList;
+	CSipMutex m_clsMutex;
+};

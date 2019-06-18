@@ -1,6 +1,20 @@
-
-// MySQLQueryMonitorDlg.cpp : implementation file
-//
+/* 
+ * Copyright (C) 2012 Yee Young Han <websearch@naver.com> (http://blog.naver.com/websearch)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+ */
 
 #include "stdafx.h"
 #include "MySQLQueryMonitor.h"
@@ -64,6 +78,7 @@ BEGIN_MESSAGE_MAP(CMySQLQueryMonitorDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDOK, &CMySQLQueryMonitorDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_START, &CMySQLQueryMonitorDlg::OnBnClickedStart)
 END_MESSAGE_MAP()
 
 
@@ -154,4 +169,27 @@ HCURSOR CMySQLQueryMonitorDlg::OnQueryDragIcon()
 
 void CMySQLQueryMonitorDlg::OnBnClickedOk()
 {
+}
+
+void CMySQLQueryMonitorDlg::OnBnClickedStart()
+{
+}
+
+LRESULT CMySQLQueryMonitorDlg::OnMySQLQueryThread( WPARAM wParam, LPARAM lParam )
+{
+	if( wParam == PARAM_REFRESH )
+	{
+
+
+	}
+	else if( wParam == PARAM_SETUP_ERROR )
+	{
+		MessageBox( "설정 파일 읽기에 실패하였습니다. MySQLQueryMonitor.exe 프로그램이 존재하는 폴더에 MySQLQueryMonitor.xml 파일이 존재하는지 확인해 주시고 MySQLQueryMonitor.xml 파일의 내용을 확인해 주세요.", "오류", MB_OK | MB_ICONERROR );
+	}
+	else if( wParam == PARAM_CONNECT_ERROR )
+	{
+		MessageBox( "MySQL DB 연결에 실패하였습니다. MySQLQueryMonitor.xml 파일에서 DB 연결 정보를 확인해 주세요.", "오류", MB_OK | MB_ICONERROR );
+	}
+
+	return 0;
 }

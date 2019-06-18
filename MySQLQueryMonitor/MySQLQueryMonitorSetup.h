@@ -53,6 +53,9 @@ public:
 	/** DB 감시 주기 (초단위) */
 	int						m_iDbMonitorPeriod;
 
+	/** 저장할 최대 쿼리 개수 */
+	int						m_iMaxQueryCount;
+
 private:
 	bool Read( CXmlElement & clsXml );
 	void SetFileSizeTime( );

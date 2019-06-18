@@ -1,7 +1,20 @@
-
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently,
-// but are changed infrequently
+/* 
+ * Copyright (C) 2012 Yee Young Han <websearch@naver.com> (http://blog.naver.com/websearch)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+ */
 
 #pragma once
 
@@ -36,15 +49,7 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
-
-
 #include <afxsock.h>            // MFC socket extensions
-
-
-
-
-
-
 
 #ifdef _UNICODE
 #if defined _M_IX86
@@ -58,4 +63,13 @@
 #endif
 #endif
 
+#define WM_MYSQL_QUERY_THREAD			(WM_USER+100)
 
+#define PARAM_REFRESH					1
+#define PARAM_SETUP_ERROR			501
+#define PARAM_CONNECT_ERROR		502
+
+// MySQLQueryThread.cpp
+bool StartMySQLQueryThread( HWND hWnd );
+bool StopMySQLQueryThread();
+bool IsMySQLQueryThreadRun();

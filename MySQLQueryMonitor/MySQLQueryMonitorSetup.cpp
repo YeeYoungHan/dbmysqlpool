@@ -24,7 +24,7 @@
 
 CMySQLQueryMonitorSetup gclsSetup;
 
-CMySQLQueryMonitorSetup::CMySQLQueryMonitorSetup() : m_iDbPort(3306), m_iDbMonitorPeriod(0)
+CMySQLQueryMonitorSetup::CMySQLQueryMonitorSetup() : m_iDbPort(3306), m_iDbMonitorPeriod(1), m_iMaxQueryCount(10)
 {
 }
 
@@ -45,7 +45,6 @@ bool CMySQLQueryMonitorSetup::Read( const char * pszFileName )
 
 	if( clsXml.ParseFile( pszFileName ) == false )
 	{
-		CLog::Print( LOG_ERROR, "%s clsXml.ParseFile(%s) error", __FUNCTION__, pszFileName );
 		return false;
 	}
 
@@ -64,28 +63,12 @@ bool CMySQLQueryMonitorSetup::Read( const char * pszFileName )
 
 	if( m_strDbHost.empty() )
 	{
-		CLog::Print( LOG_ERROR, "%s Db -> Host is not defined", __FUNCTION__ );
 		return false;
 	}
 
 	if( m_strDbUserId.empty() )
 	{
-		CLog::Print( LOG_ERROR, "%s Db -> UserId is not defined", __FUNCTION__ );
 		return false;
-	}
-
-	// ·Î±×
-	pclsElement = clsXml.SelectElement( "Log" );
-	if( pclsElement )
-	{
-		if( pclsElement->SelectElementTrimData( "Folder", strTemp ) )
-		{
-			if( CLog::SetDirectory( strTemp.c_str() ) == false )
-			{
-				printf( "[SetupFile] CLog::SetDirectory(%s) error\n", strTemp.c_str() );
-				return false;
-			}
-		}
 	}
 
 	bool bRes = Read( clsXml );
@@ -132,43 +115,16 @@ bool CMySQLQueryMonitorSetup::Read( CXmlElement & clsXml )
 	if( pclsElement )
 	{
 		pclsElement->SelectElementData( "MonitorPeriod", m_iDbMonitorPeriod );
-
 		if( m_iDbMonitorPeriod <= 0 )
 		{
-			CLog::Print( LOG_ERROR, "%s Db -> MonitorPeriod(%d) is not correct and change to 1", __FUNCTION__, m_iDbMonitorPeriod );
 			m_iDbMonitorPeriod = 1;
 		}
-	}
 
-	pclsElement = clsXml.SelectElement( "Log" );
-	if( pclsElement )
-	{
-		int iLogLevel = 0;
-
-		CXmlElement * pclsClient = pclsElement->SelectElement( "Level" );
-		if( pclsClient )
+		pclsElement->SelectElementData( "MaxQueryCount", m_iMaxQueryCount );
+		if( m_iMaxQueryCount <= 0 )
 		{
-			bool bTemp;
-
-			pclsClient->SelectAttribute( "Debug", bTemp );
-			if( bTemp ) iLogLevel |= LOG_DEBUG;
-
-			pclsClient->SelectAttribute( "Info", bTemp );
-			if( bTemp ) iLogLevel |= LOG_INFO;
-
-			pclsClient->SelectAttribute( "Sql", bTemp );
-			if( bTemp ) iLogLevel |= LOG_SQL;
+			m_iMaxQueryCount = 10;
 		}
-
-		int			iLogMaxSize = 0;
-		int64_t	iLogMaxFolderSize = 0;
-
-		pclsElement->SelectElementData( "MaxSize", iLogMaxSize );
-		pclsElement->SelectElementData( "MaxFolderSize", iLogMaxFolderSize );
-
-		CLog::SetLevel( iLogLevel );
-		CLog::SetMaxLogSize( iLogMaxSize );
-		CLog::SetMaxFolderSize( iLogMaxFolderSize );
 	}
 
 	return true;

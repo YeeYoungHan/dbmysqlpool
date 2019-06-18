@@ -35,3 +35,18 @@
 	</Db>
 </MySQLQueryMonitor>
 ```
+
+### 실행 방법
+
+* MySQLQueryMonitor.exe 프로그램이 존재하는 폴더에 MySQLQueryMonitor.xml 파일을 생성한 후, 위와 같이 입력하고 각 항목을 접속할 MySQL DB 에 적합하게 수정한다.
+* MySQLQueryMonitor.exe 프로그램을 실행한다.
+* "Start" 버튼을 클릭한다.
+* SQL 문 전체를 보고 싶으면 Second 컬럼에서 해당 SQL 문의 실행 시간을 더블 클릭한다.
+
+### 관련 포스트
+
+* https://blog.naver.com/websearch/221564836223
+
+### 실행 화면
+
+![Alt text](https://postfiles.pstatic.net/MjAxOTA2MThfMjg5/MDAxNTYwODMxMjc0MTYw.9dhtpvLJqp97pjmM8kj5NlngV5suOj5EtwvY7wwiQsMg.HhVoIntuNnwtDSYoUJNQRSNSK8x1HH7nITdx44QV4FYg.PNG.websearch/MySQLQueryMonitor-1.png?type=w773)

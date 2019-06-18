@@ -111,7 +111,7 @@ bool StopMySQLQueryThread()
 	{
 		gbStop = true;
 		
-		while( gbRun == false )
+		while( gbRun )
 		{
 			Sleep(100);
 		}

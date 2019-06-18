@@ -64,6 +64,7 @@ END_MESSAGE_MAP()
 
 CMySQLQueryMonitorDlg::CMySQLQueryMonitorDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CMySQLQueryMonitorDlg::IDD, pParent)
+	, m_strTime(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_bStart = true;
@@ -74,6 +75,7 @@ void CMySQLQueryMonitorDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_START, m_btnStart);
 	DDX_Control(pDX, IDC_SQL_LIST, m_clsSQLList);
+	DDX_Text(pDX, IDC_TIME, m_strTime);
 }
 
 BEGIN_MESSAGE_MAP(CMySQLQueryMonitorDlg, CDialog)
@@ -82,6 +84,7 @@ BEGIN_MESSAGE_MAP(CMySQLQueryMonitorDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDOK, &CMySQLQueryMonitorDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDCANCEL, &CMySQLQueryMonitorDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_START, &CMySQLQueryMonitorDlg::OnBnClickedStart)
 	ON_MESSAGE(WM_MYSQL_QUERY_THREAD, &CMySQLQueryMonitorDlg::OnMySQLQueryThread)
 END_MESSAGE_MAP()
@@ -118,8 +121,8 @@ BOOL CMySQLQueryMonitorDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
-	m_clsSQLList.InsertColumn( 0, "Second", LVCFMT_LEFT, 80 );
-	m_clsSQLList.InsertColumn( 1, "SQL", LVCFMT_LEFT, 510 );
+	m_clsSQLList.InsertColumn( 0, "Second", LVCFMT_LEFT, 50 );
+	m_clsSQLList.InsertColumn( 1, "SQL", LVCFMT_LEFT, 550 );
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -177,6 +180,16 @@ void CMySQLQueryMonitorDlg::OnBnClickedOk()
 {
 }
 
+void CMySQLQueryMonitorDlg::OnBnClickedCancel()
+{
+	if( IsMySQLQueryThreadRun() )
+	{
+		StopMySQLQueryThread();
+	}
+
+	OnCancel();
+}
+
 void CMySQLQueryMonitorDlg::OnBnClickedStart()
 {
 	if( m_bStart )
@@ -231,6 +244,13 @@ LRESULT CMySQLQueryMonitorDlg::OnMySQLQueryThread( WPARAM wParam, LPARAM lParam 
 
 			++iRow;
 		}
+
+		SYSTEMTIME sttTime;
+
+		GetLocalTime( &sttTime );
+
+		m_strTime.Format( "수신 시간 %02d:%02d:%02d", sttTime.wHour, sttTime.wMinute, sttTime.wSecond );
+		UpdateData( FALSE );
 	}
 	else if( wParam == PARAM_SETUP_ERROR )
 	{

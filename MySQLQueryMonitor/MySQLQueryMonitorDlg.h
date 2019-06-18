@@ -3,6 +3,8 @@
 //
 
 #pragma once
+#include "afxwin.h"
+#include "afxcmn.h"
 
 
 // CMySQLQueryMonitorDlg dialog
@@ -22,6 +24,7 @@ public:
 // Implementation
 protected:
 	HICON m_hIcon;
+	bool m_bStart;
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();
@@ -30,6 +33,9 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	CButton m_btnStart;
+	CListCtrl m_clsSQLList;
+
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedStart();
 

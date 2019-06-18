@@ -20,12 +20,19 @@
 #include "QueryTimeList.h"
 #include "MySQLQueryMonitorSetup.h"
 
+CQueryTimeList gclsQueryTimeList;
+
 CQueryTimeList::CQueryTimeList()
 {
 }
 
 CQueryTimeList::~CQueryTimeList()
 {
+}
+
+static bool CQueryTimeCompare( const CQueryTime & clsFirst, const CQueryTime & clsSecond )
+{
+	return ( clsFirst.m_iSecond > clsSecond.m_iSecond );
 }
 
 void CQueryTimeList::Insert( QUERY_TIME_LIST & clsList )
@@ -38,7 +45,14 @@ void CQueryTimeList::Insert( QUERY_TIME_LIST & clsList )
 		Insert( *itQT );
 	}
 
-	// QQQ: 쿼리 시간이 많이 소요된 순서로 다시 정렬한다.
+	// 쿼리 시간이 많이 소요된 순서로 다시 정렬한다.
+	m_clsList.sort( CQueryTimeCompare );
+
+	// 쿼리 저장 최대 개수를 초과하는 경우, 최대 개수까지만 저장하도록 수정한다.
+	if( (int)m_clsList.size() > gclsSetup.m_iMaxQueryCount )
+	{
+		m_clsList.resize( gclsSetup.m_iMaxQueryCount );
+	}
 	m_clsMutex.release();
 }
 

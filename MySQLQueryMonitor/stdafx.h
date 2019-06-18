@@ -18,6 +18,8 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifndef _SECURE_ATL
 #define _SECURE_ATL 1
 #endif
@@ -35,11 +37,7 @@
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
-
-
 #include <afxdisp.h>        // MFC Automation classes
-
-
 
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>           // MFC support for Internet Explorer 4 Common Controls

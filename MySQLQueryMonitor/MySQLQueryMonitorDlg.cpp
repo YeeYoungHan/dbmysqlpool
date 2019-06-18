@@ -19,6 +19,7 @@
 #include "stdafx.h"
 #include "MySQLQueryMonitor.h"
 #include "MySQLQueryMonitorDlg.h"
+#include "QueryTimeList.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,11 +66,14 @@ CMySQLQueryMonitorDlg::CMySQLQueryMonitorDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CMySQLQueryMonitorDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_bStart = true;
 }
 
 void CMySQLQueryMonitorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_START, m_btnStart);
+	DDX_Control(pDX, IDC_SQL_LIST, m_clsSQLList);
 }
 
 BEGIN_MESSAGE_MAP(CMySQLQueryMonitorDlg, CDialog)
@@ -79,6 +83,7 @@ BEGIN_MESSAGE_MAP(CMySQLQueryMonitorDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDOK, &CMySQLQueryMonitorDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_START, &CMySQLQueryMonitorDlg::OnBnClickedStart)
+	ON_MESSAGE(WM_MYSQL_QUERY_THREAD, &CMySQLQueryMonitorDlg::OnMySQLQueryThread)
 END_MESSAGE_MAP()
 
 
@@ -112,8 +117,9 @@ BOOL CMySQLQueryMonitorDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
-
-	// TODO: Add extra initialization here
+	
+	m_clsSQLList.InsertColumn( 0, "Second", LVCFMT_LEFT, 80 );
+	m_clsSQLList.InsertColumn( 1, "SQL", LVCFMT_LEFT, 510 );
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -173,22 +179,74 @@ void CMySQLQueryMonitorDlg::OnBnClickedOk()
 
 void CMySQLQueryMonitorDlg::OnBnClickedStart()
 {
+	if( m_bStart )
+	{
+		if( IsMySQLQueryThreadRun() )
+		{
+			MessageBox( "이미 시작되어 있습니다.", "오류", MB_OK | MB_ICONERROR );
+			return;
+		}
+
+		if( StartMySQLQueryThread( m_hWnd ) == false )
+		{
+			MessageBox( "시작하지 못 하였습니다.", "오류", MB_OK | MB_ICONERROR );
+			return;
+		}
+
+		m_bStart = false;
+		m_btnStart.SetWindowText( "Stop" );
+	}
+	else
+	{
+		if( IsMySQLQueryThreadRun() )
+		{
+			StopMySQLQueryThread();
+		}
+
+		m_bStart = true;
+		m_btnStart.SetWindowText( "Start" );
+	}
 }
 
 LRESULT CMySQLQueryMonitorDlg::OnMySQLQueryThread( WPARAM wParam, LPARAM lParam )
 {
+	bool bError = false;
+
 	if( wParam == PARAM_REFRESH )
 	{
+		QUERY_TIME_LIST clsList;
+		QUERY_TIME_LIST::iterator itQT;
+		int iRow = 0;
+		char szSecond[11];
 
+		gclsQueryTimeList.Select( clsList );
+		m_clsSQLList.DeleteAllItems();
 
+		for( itQT = clsList.begin(); itQT != clsList.end(); ++itQT )
+		{
+			_snprintf( szSecond, sizeof(szSecond), "%d", itQT->m_iSecond );
+
+			m_clsSQLList.InsertItem( iRow, szSecond );
+			m_clsSQLList.SetItemText( iRow, 1, itQT->m_strSQL.c_str() );
+
+			++iRow;
+		}
 	}
 	else if( wParam == PARAM_SETUP_ERROR )
 	{
 		MessageBox( "설정 파일 읽기에 실패하였습니다. MySQLQueryMonitor.exe 프로그램이 존재하는 폴더에 MySQLQueryMonitor.xml 파일이 존재하는지 확인해 주시고 MySQLQueryMonitor.xml 파일의 내용을 확인해 주세요.", "오류", MB_OK | MB_ICONERROR );
+		bError = true;
 	}
 	else if( wParam == PARAM_CONNECT_ERROR )
 	{
 		MessageBox( "MySQL DB 연결에 실패하였습니다. MySQLQueryMonitor.xml 파일에서 DB 연결 정보를 확인해 주세요.", "오류", MB_OK | MB_ICONERROR );
+		bError = true;
+	}
+
+	if( bError )
+	{
+		m_bStart = true;
+		m_btnStart.SetWindowText( "Start" );
 	}
 
 	return 0;

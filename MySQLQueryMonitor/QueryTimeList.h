@@ -47,3 +47,5 @@ private:
 	QUERY_TIME_LIST m_clsList;
 	CSipMutex m_clsMutex;
 };
+
+extern CQueryTimeList gclsQueryTimeList;

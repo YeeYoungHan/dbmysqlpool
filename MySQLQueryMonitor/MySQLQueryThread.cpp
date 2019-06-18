@@ -30,14 +30,17 @@ static HWND ghWnd;
 
 bool FetchQuery( void * pclsData, MYSQL_ROW & sttRow )
 {
-	QUERY_TIME_LIST * pclsList = (QUERY_TIME_LIST *)pclsData;
+	if( sttRow[0] && sttRow[1] )
+	{
+		QUERY_TIME_LIST * pclsList = (QUERY_TIME_LIST *)pclsData;
 
-	CQueryTime clsTime;
+		CQueryTime clsTime;
 
-	clsTime.m_iSecond = atoi(sttRow[0]);
-	clsTime.m_strSQL = sttRow[1];
+		clsTime.m_iSecond = atoi(sttRow[0]);
+		clsTime.m_strSQL = sttRow[1];
 
-	pclsList->push_back( clsTime );
+		pclsList->push_back( clsTime );
+	}
 
 	return true;
 }
@@ -53,11 +56,11 @@ THREAD_API MySQLQueryThread( LPVOID lpParameter )
 
 	if( gclsSetup.Read( strFileName.c_str() ) == false )
 	{
-		::PostMessage( ghWnd, WM_MYSQL_QUERY_THREAD, PARAM_SETUP_ERROR, 0 );
+		::SendMessage( ghWnd, WM_MYSQL_QUERY_THREAD, PARAM_SETUP_ERROR, 0 );
 	}
 	else if( clsDB.Connect( gclsSetup.m_strDbHost.c_str(), gclsSetup.m_strDbUserId.c_str(), gclsSetup.m_strDbPassWord.c_str(), "", gclsSetup.m_iDbPort ) == false )
 	{
-		::PostMessage( ghWnd, WM_MYSQL_QUERY_THREAD, PARAM_CONNECT_ERROR, 0 );
+		::SendMessage( ghWnd, WM_MYSQL_QUERY_THREAD, PARAM_CONNECT_ERROR, 0 );
 	}
 	else
 	{
@@ -69,9 +72,10 @@ THREAD_API MySQLQueryThread( LPVOID lpParameter )
 			QUERY_TIME_LIST clsList;
 
 			dwStart = GetTickCount();
-			clsDB.Query( "SELECT TIME, INFO FROM information_schema.processlist WHERE COMMAND <> 'Query' AND TIME > 0", &clsList, FetchQuery );
+			clsDB.Query( "SELECT TIME, INFO FROM information_schema.processlist WHERE COMMAND = 'Query' AND TIME > 0", &clsList, FetchQuery );
+			gclsQueryTimeList.Insert( clsList );
 
-			::PostMessage( ghWnd, WM_MYSQL_QUERY_THREAD, PARAM_REFRESH, 0 );
+			::SendMessage( ghWnd, WM_MYSQL_QUERY_THREAD, PARAM_REFRESH, 0 );
 
 			dwEnd = GetTickCount();
 

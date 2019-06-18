@@ -27,6 +27,35 @@ C++ STL 기반으로 MySQL DB pool 개발 프로젝트입니다.
 # make
 ```
 
+### 폴더 설명
+
+* DbMySQLPool
+  * C++ STL 라이브러리를 이용한 MySQL DB pool 라이브러리
+
+* mysql
+  * MS 윈도우용 mysql 클라이언트 라이브러리
+
+* MySQLQueryMonitor
+  * MySQL 쿼리 모니터링 프로그램 ( 가장 시간이 많이 소요되는 SQL 리스트를 보여준다. )
+
+* MySQLSlaveOverWatcher
+  * MySQL slave 감시 서비스
+
+* Publish
+  * WIN32 용 빌드 버전 저장 폴더
+
+* ServerPlatform
+  * 윈도우/리눅스 서비스 개발을 위한 라이브러리
+
+* SipPlatform
+  * 멀티 OS 지원을 위한 라이브러리
+
+* TestDbMySQLPool
+  * MySQL DB pool 라이브러리 테스트 프로그램
+
+* XmlParser
+  * XML 문자열 또는 파일 파서 라이브러리
+
 ### DB pool 사용법
 아래의 블로그 포스트에 DB pool 사용법이 기술되어 있습니다.
 

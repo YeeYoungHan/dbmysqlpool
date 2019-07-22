@@ -49,7 +49,13 @@ enum EnumLogLevel
 	/** 시스템 로그 */
 	LOG_SYSTEM = 0x400,
 	/** SQL 로그 */
-	LOG_SQL = 0x800
+	LOG_SQL = 0x800,
+	/** SQL1 로그 */
+	LOG_SQL1 = 0x1000,
+	/** SQL2 로그 */
+	LOG_SQL2 = 0x2000,
+	/** SQL3 로그 */
+	LOG_SQL3 = 0x4000
 };
 
 /**

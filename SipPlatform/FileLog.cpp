@@ -142,6 +142,15 @@ bool CFileLog::Print( EnumLogLevel iLevel, const char * fmt, ... )
 	case LOG_SQL:
 		snprintf( szHeader, sizeof(szHeader), "[SQL] " );
 		break;
+	case LOG_SQL1:
+		snprintf( szHeader, sizeof(szHeader), "[SQL1] " );
+		break;
+	case LOG_SQL2:
+		snprintf( szHeader, sizeof(szHeader), "[SQL2] " );
+		break;
+	case LOG_SQL3:
+		snprintf( szHeader, sizeof(szHeader), "[SQL3] " );
+		break;
 	default:
 		memset( szHeader, 0, sizeof(szHeader) );
 		break;

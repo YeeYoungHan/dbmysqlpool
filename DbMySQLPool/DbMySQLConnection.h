@@ -23,6 +23,7 @@
 #include "SipTcp.h"
 #include "mysql.h"
 #include "StringUtility.h"
+#include "Log.h"
 
 /**
  * @ingroup DbMySQLPool
@@ -63,6 +64,8 @@ public:
 	void SetReadTimeout( int iSecond );
 	void SetWriteTimeout( int iSecond );
 
+	void SetLogLevel( EnumLogLevel eLogLevel );
+
 	static void Final( );
 
 private:
@@ -82,6 +85,8 @@ private:
 
 	int m_iReadTimeout;
 	int m_iWriteTimeout;
+
+	EnumLogLevel m_eLogLevel;
 
 	bool Query( const char * pszSQL );
 	bool Connect( );

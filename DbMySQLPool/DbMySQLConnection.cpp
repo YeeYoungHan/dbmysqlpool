@@ -18,7 +18,6 @@
 
 #include "SipPlatformDefine.h"
 #include "DbMySQLConnection.h"
-#include "Log.h"
 #include "errmsg.h"
 #include "mysqld_error.h"
 #include <stdarg.h>
@@ -28,7 +27,7 @@
 #pragma comment( lib, "mysqlclient" )
 #endif
 
-CDbMySQLConnection::CDbMySQLConnection() : m_bConnected(false), m_psttStmt(NULL), m_psttBind(NULL), m_iBindCount(0), m_iReadTimeout(0), m_iWriteTimeout(0)
+CDbMySQLConnection::CDbMySQLConnection() : m_bConnected(false), m_psttStmt(NULL), m_psttBind(NULL), m_iBindCount(0), m_iReadTimeout(0), m_iWriteTimeout(0), m_eLogLevel(LOG_SQL)
 {
 }
 
@@ -371,7 +370,7 @@ bool CDbMySQLConnection::Query( const char * pszSQL )
 			{
 				if( iErrorNo == ER_NO_SUCH_TABLE || iErrorNo == ER_BAD_TABLE_ERROR )
 				{
-					CLog::Print( LOG_SQL, "%.2048s - error(%u) - %s", pszSQL, iErrorNo, mysql_error( &m_sttMySQL ) );
+					CLog::Print( m_eLogLevel, "%.2048s - error(%u) - %s", pszSQL, iErrorNo, mysql_error( &m_sttMySQL ) );
 				}
 				else
 				{
@@ -382,7 +381,7 @@ bool CDbMySQLConnection::Query( const char * pszSQL )
 		}
 		else
 		{
-			CLog::Print( LOG_SQL, "%.2048s", pszSQL );
+			CLog::Print( m_eLogLevel, "%.2048s", pszSQL );
 			bRes = true;
 			break;
 		}
@@ -492,7 +491,7 @@ bool CDbMySQLConnection::Prepare( const char * pszSQL )
 		}
 		else
 		{
-			CLog::Print( LOG_SQL, "%.2048s", pszSQL );
+			CLog::Print( m_eLogLevel, "%.2048s", pszSQL );
 			break;
 		}
 	}
@@ -778,6 +777,16 @@ void CDbMySQLConnection::SetWriteTimeout( int iSecond )
 	{
 		m_iWriteTimeout = iSecond;
 	}
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief SQL 로그 레벨을 설정한다.
+ * @param eLogLevel SQL 로그 레벨 ( LOG_SQL, LOG_SQL1, LOG_SQL2, LOG_SQL3 중에서 1개를 입력한다. )
+ */
+void CDbMySQLConnection::SetLogLevel( EnumLogLevel eLogLevel )
+{
+	m_eLogLevel = eLogLevel;
 }
 
 /**

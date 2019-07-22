@@ -61,7 +61,7 @@ int main( int argc, char * argv[] )
 	_CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
 #endif
 
-	CLog::SetLevel( LOG_INFO | LOG_SQL | LOG_DEBUG );
+	CLog::SetLevel( LOG_INFO | LOG_SQL | LOG_SQL1 | LOG_SQL2 | LOG_SQL3 | LOG_DEBUG );
 
 	pszUserId = argv[1];
 	pszPassWord = argv[2];
@@ -123,9 +123,14 @@ int main( int argc, char * argv[] )
 
 		if( clsPool.Select( &clsCon.m_pclsData ) )
 		{
+			clsCon.m_pclsData->SetLogLevel( LOG_SQL1 );
 			clsCon.m_pclsData->Execute( "INSERT INTO test( name ) VALUES( 'name_2' )" );
+			clsCon.m_pclsData->SetLogLevel( LOG_SQL2 );
 			clsCon.m_pclsData->Insert( "INSERT INTO test( id, name ) VALUES( NULL, 'test' )", &iId );
-			clsCon.m_pclsData->Execute( "INSERT INTO test( id, name ) VALUES( ?, ? )", 2, "1", "new_name" );
+			clsCon.m_pclsData->SetLogLevel( LOG_SQL3 );
+			clsCon.m_pclsData->Execute( "INSERT INTO test( id, name ) VALUES( ?, ? )", 2, "3", "new_name" );
+			clsCon.m_pclsData->SetLogLevel( LOG_SQL );
+			clsCon.m_pclsData->Execute( "INSERT INTO test( name ) VALUES( 'name_3' )" );
 		}
 	}
 

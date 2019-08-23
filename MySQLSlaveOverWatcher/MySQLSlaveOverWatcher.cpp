@@ -70,7 +70,15 @@ bool CheckSlave( CDbMySQLConnection & clsDB )
 
 		clsDB.Query( "SHOW SLAVE STATUS", &clsStatus, FetchStatus );
 
-		if( clsStatus.m_iLastErrNo == 0 ) break;
+		if( !strcmp( clsStatus.m_strSlaveIORunning.c_str(), "Yes" ) && 
+				!strcmp( clsStatus.m_strSlaveSQLRunning.c_str(), "Yes" ) ) 
+		{
+			CLog::Print( LOG_DEBUG, " Slave_IO_Running: %s", clsStatus.m_strSlaveIORunning.c_str() );
+			CLog::Print( LOG_DEBUG, "Slave_SQL_Running: %s", clsStatus.m_strSlaveSQLRunning.c_str() );
+			CLog::Print( LOG_DEBUG, "       Last_Errno: %d", clsStatus.m_iLastErrNo );
+			CLog::Print( LOG_DEBUG, "       Last_Error: %s", clsStatus.m_strLastError.c_str() );
+			break;
+		}
 
 		CLog::Print( LOG_ERROR, " Slave_IO_Running: %s", clsStatus.m_strSlaveIORunning.c_str() );
 		CLog::Print( LOG_ERROR, "Slave_SQL_Running: %s", clsStatus.m_strSlaveSQLRunning.c_str() );

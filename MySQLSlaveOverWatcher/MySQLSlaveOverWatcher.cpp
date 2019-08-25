@@ -70,8 +70,10 @@ bool CheckSlave( CDbMySQLConnection & clsDB )
 
 		clsDB.Query( "SHOW SLAVE STATUS", &clsStatus, FetchStatus );
 
-		if( !strcmp( clsStatus.m_strSlaveIORunning.c_str(), "Yes" ) && 
-				!strcmp( clsStatus.m_strSlaveSQLRunning.c_str(), "Yes" ) ) 
+		// Slave_IO_Running 와 Slave_SQL_Running 가 모두 No 가 아니면 정상적으로 동작한다고 판단한다.
+		// Connecting 같은 문자열이 저장되어 있을 수 있어서 No 로만 구분한다.
+		if( strcasecmp( clsStatus.m_strSlaveIORunning.c_str(), "No" ) && 
+				strcasecmp( clsStatus.m_strSlaveSQLRunning.c_str(), "No" ) ) 
 		{
 			CLog::Print( LOG_DEBUG, " Slave_IO_Running: %s", clsStatus.m_strSlaveIORunning.c_str() );
 			CLog::Print( LOG_DEBUG, "Slave_SQL_Running: %s", clsStatus.m_strSlaveSQLRunning.c_str() );

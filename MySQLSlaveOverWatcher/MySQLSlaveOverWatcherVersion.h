@@ -24,7 +24,7 @@
 /* 버전 정보
 
 = 버전 0.02 ( 2019년 08월 23일 ) =
- * Slave_IO_Running 또는 Slave_SQL_Running 가 모두 Yes 이면 slave 가 정상적으로 운영된다고 처리한다.
+ * Slave_IO_Running 또는 Slave_SQL_Running 가 모두 No 가 아니면 slave 가 정상적으로 운영된다고 처리한다.
 
 = 버전 0.01 ( 2018년 11월 14일 ) =
  * 최초 버전

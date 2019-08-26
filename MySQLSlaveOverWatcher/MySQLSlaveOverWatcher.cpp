@@ -89,7 +89,9 @@ bool CheckSlave( CDbMySQLConnection & clsDB )
 
 		clsDB.Execute( "STOP SLAVE" );
 		clsDB.Execute( "SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1" );
-		clsDB.Execute( "START SLAVE" );
+
+		// START SLAVE 오류인 경우에는 SLAVE 로 동작할 수 없는 환경이므로 loop 에서 빠져나간다.
+		if( clsDB.Execute( "START SLAVE" ) == false ) break;
 
 		MiliSleep( gclsSetup.m_iDbReWatchPeriod );
 	}

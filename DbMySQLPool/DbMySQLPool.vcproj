@@ -193,6 +193,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DbMySQLPoolVersion.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DbMySQLQueue.h"
 				>
 			</File>

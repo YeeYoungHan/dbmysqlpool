@@ -618,7 +618,6 @@ bool CDbMySQLConnection::PrepareClose( )
  * @brief prepare statement 로 SQL INSERT, UPDATE, DELETE 명령을 수행한다.
  * @param pszSQL		동적 SQL 문
  * @param iArgCount Bind 인자 개수
- * @param						Bind 인자
  * @returns 성공하면 true 를 리턴하고 실패하면 false 를 리턴한다.
  */
 bool CDbMySQLConnection::Execute( const char * pszSQL, int iArgCount, ... )

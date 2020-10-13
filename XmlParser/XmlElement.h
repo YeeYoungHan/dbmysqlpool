@@ -41,7 +41,6 @@ typedef std::list< CXmlElement > XML_ELEMENT_LIST;
 /**
  * @defgroup XmlParser XmlParser
  * Xml 파싱/생성 라이브러리
- * Xml 파싱/생성 라이브러리
  */
 
 /**

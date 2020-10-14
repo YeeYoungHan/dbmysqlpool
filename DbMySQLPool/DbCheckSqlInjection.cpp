@@ -88,7 +88,7 @@ bool DbCheckSqlInjectionNotSpace( std::string & strValue )
 
 /**
  * @ingroup DbMySQLPool
- * @brief - 를 제외한 SQL injection 공격 문자열이 포함되어 있는지 검사한다.
+ * @brief '-' 를 제외한 SQL injection 공격 문자열이 포함되어 있는지 검사한다.
  * @param strValue 검사 문자열
  * @returns SQL injection 공격 문자열이 포함되어 있으면 false 를 리턴하고 그렇지 않으면 true 를 리턴한다.
  */

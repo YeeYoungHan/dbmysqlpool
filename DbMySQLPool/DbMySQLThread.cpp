@@ -29,7 +29,7 @@ static int giThreadCount = 0;
 
 /**
  * @ingroup DbMySQLPool
- * @brief 
+ * @brief MySQL 연동 쓰레드 인자 저장 클래스
  */
 class CDbMySQLThreadArg
 {
@@ -46,9 +46,9 @@ public:
 
 /**
  * @ingroup DbMySQLPool
- * @brief 
- * @param lpParameter 
- * @returns 
+ * @brief MySQL 연동 쓰레드
+ * @param lpParameter CDbMySQLThreadArg 객체의 포인터
+ * @returns 0 을 리턴한다.
  */
 THREAD_API DbMySQLThread( LPVOID lpParameter )
 {

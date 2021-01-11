@@ -1,1 +1,1 @@
-32bit MS 윈도우용 MySQL Server 5.0 에서 가져온 라이브러리
+32bit MS 윈도우용 MySQL Server 5.6.10 에서 가져온 라이브러리

@@ -288,7 +288,13 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std
 	}
 
 	MYSQL_BIND    sttBind;
+
+#if _MSC_VER == VC2008_VERSION
 	my_bool				bError = 0, bNull = 0;
+#else
+	bool					bError = false, bNull = false;
+#endif
+
 	unsigned long iLength;
 	char	* pszData = NULL;
 
@@ -468,7 +474,7 @@ bool CDbMySQLConnection::Prepare( const char * pszSQL )
 			return false;
 		}
 
-		if( mysql_stmt_prepare( m_psttStmt, pszSQL, strlen(pszSQL) ) != 0 )
+		if( mysql_stmt_prepare( m_psttStmt, pszSQL, (int)strlen(pszSQL) ) != 0 )
 		{
 			unsigned int iErrorNo = mysql_errno( &m_sttMySQL );
 
@@ -543,7 +549,7 @@ bool CDbMySQLConnection::Bind( int iIndex, const char * pszVal )
 
 	m_psttBind[iIndex].buffer_type = MYSQL_TYPE_STRING;
 	m_psttBind[iIndex].buffer = (void *)m_clsBindList[iIndex].c_str();
-	m_psttBind[iIndex].buffer_length = m_clsBindList[iIndex].length();
+	m_psttBind[iIndex].buffer_length = (int)m_clsBindList[iIndex].length();
 
 	/*
 	m_psttBind[iIndex].buffer_length = STRING_SIZE;

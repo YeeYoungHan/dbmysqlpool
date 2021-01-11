@@ -50,8 +50,9 @@ int main( int argc, char * argv[] )
 {
 	char * pszUserId, * pszPassWord, * pszDbName;
 	std::string strRes;
+	int iDbPort = 3306;
 
-	if( argc != 4 )
+	if( argc < 4 )
 	{
 		printf( "[Usage] %s {db user id} {db password} {db name}\n", argv[0] );
 		return 0;
@@ -67,12 +68,17 @@ int main( int argc, char * argv[] )
 	pszPassWord = argv[2];
 	pszDbName = argv[3];
 
+	if (argc > 4)
+	{
+		iDbPort = atoi(argv[4]);
+	}
+
 	// ===========================================================================
 	// CDbMySQLConnection 사용 예제
 
 	CDbMySQLConnection clsDB;
 
-	if( clsDB.Connect( "127.0.0.1", pszUserId, pszPassWord, pszDbName, 3306 ) == false )
+	if( clsDB.Connect( "127.0.0.1", pszUserId, pszPassWord, pszDbName, iDbPort) == false )
 	{
 		printf( "clsDB.Connect error\n" );
 		return 0;
@@ -102,7 +108,7 @@ int main( int argc, char * argv[] )
 	int iCount;
 
 	// 2개의 DB 연결을 사용하는 DB connection POOL 생성
-	if( clsPool.Create( 2, "127.0.0.1", pszUserId, pszPassWord, pszDbName, 3306 ) == false )
+	if( clsPool.Create( 2, "127.0.0.1", pszUserId, pszPassWord, pszDbName, iDbPort) == false )
 	{
 		printf( "clsPool.Create() error\n" );
 		return -1;

@@ -75,7 +75,11 @@ int main( int argc, char * argv[] )
 
 	if( argc > 5 )
 	{
+#ifdef USE_PLUGIN_DIR
 		pszPluginPath = argv[5];
+#else
+		printf( "mysql version < 5.6.10\n" );
+#endif
 	}
 
 	// ===========================================================================
@@ -83,10 +87,12 @@ int main( int argc, char * argv[] )
 
 	CDbMySQLConnection clsDB;
 
+#ifdef USE_PLUGIN_DIR
 	if( pszPluginPath )
 	{
 		clsDB.SetPluginDir( pszPluginPath );
 	}
+#endif
 
 	if( clsDB.Connect( "127.0.0.1", pszUserId, pszPassWord, pszDbName, iDbPort) == false )
 	{
@@ -117,10 +123,12 @@ int main( int argc, char * argv[] )
 	uint64_t	iId;
 	int iCount;
 
+#ifdef USE_PLUGIN_DIR
 	if( pszPluginPath )
 	{
 		clsPool.SetPluginDir( pszPluginPath );
 	}
+#endif
 
 	// 2개의 DB 연결을 사용하는 DB connection POOL 생성
 	if( clsPool.Create( 2, "127.0.0.1", pszUserId, pszPassWord, pszDbName, iDbPort) == false )

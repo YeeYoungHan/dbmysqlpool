@@ -63,6 +63,11 @@ bool CDbMySQLPool::Create( int iPoolCount, const char * pszHost, const char * ps
 		pclsDB->SetReadTimeout( m_iReadTimeout );
 		pclsDB->SetWriteTimeout( m_iWriteTimeout );
 
+		if( m_strPluginDir.empty() == false )
+		{
+			pclsDB->SetPluginDir( m_strPluginDir.c_str() );
+		}
+
 		if( pclsDB->Connect( pszHost, pszUserId, pszPassWord, pszDbName, iPort, pszCharacterSet ) == false )
 		{
 			CLog::Print( LOG_ERROR, "pclsDB->Connect error - index(%d)", i );
@@ -331,4 +336,14 @@ void CDbMySQLPool::SetWriteTimeout( int iSecond )
 	{
 		m_iWriteTimeout = iSecond;
 	}
+}
+
+/**
+ * @ingroup DbMySQLPool
+ * @brief MySQL 8.x 에 정상적으로 로그인하기 위한 plug-in 폴더 경로를 설정한다.
+ * @param pszPluginDir caching_sha2_password.dll 이 저장된 폴더
+ */
+void CDbMySQLPool::SetPluginDir( const char * pszPluginDir )
+{
+	m_strPluginDir = pszPluginDir;
 }

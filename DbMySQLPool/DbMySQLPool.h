@@ -62,6 +62,7 @@ public:
 
 	void SetReadTimeout( int iSecond );
 	void SetWriteTimeout( int iSecond );
+	void SetPluginDir( const char * pszPluginDir );
 
 private:
 	CSipMutex	m_clsMutex;
@@ -70,6 +71,7 @@ private:
 	bool m_bDestroy;
 	int m_iReadTimeout;
 	int m_iWriteTimeout;
+	std::string m_strPluginDir;
 };
 
 #endif

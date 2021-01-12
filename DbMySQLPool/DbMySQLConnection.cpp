@@ -289,11 +289,11 @@ bool CDbMySQLConnection::QueryOne( const char * pszSQL, const char * pszArg, std
 
 	MYSQL_BIND    sttBind;
 
-#if _MSC_VER == VC2008_VERSION
+//#if _MSC_VER == VC2008_VERSION
 	my_bool				bError = 0, bNull = 0;
-#else
-	bool					bError = false, bNull = false;
-#endif
+//#else
+//	bool					bError = false, bNull = false;
+//#endif
 
 	unsigned long iLength;
 	char	* pszData = NULL;
@@ -411,6 +411,11 @@ bool CDbMySQLConnection::Connect( )
 		return false;
 	}
 
+	if( m_strPluginDir.empty() == false )
+	{
+		mysql_options( &m_sttMySQL, MYSQL_PLUGIN_DIR, m_strPluginDir.c_str() );
+	}
+	
 	if( m_iReadTimeout > 0 )
 	{
 		mysql_options( &m_sttMySQL, MYSQL_OPT_READ_TIMEOUT, (char *)&m_iReadTimeout );
@@ -782,6 +787,11 @@ void CDbMySQLConnection::SetWriteTimeout( int iSecond )
 	{
 		m_iWriteTimeout = iSecond;
 	}
+}
+
+void CDbMySQLConnection::SetPluginDir( const char * pszPluginDir )
+{
+	m_strPluginDir = pszPluginDir;
 }
 
 /**

@@ -63,6 +63,7 @@ public:
 
 	void SetReadTimeout( int iSecond );
 	void SetWriteTimeout( int iSecond );
+	void SetPluginDir( const char * pszPluginDir );
 
 	void SetLogLevel( EnumLogLevel eLogLevel );
 
@@ -74,6 +75,7 @@ private:
 	std::string	m_strDbPassWord;
 	std::string	m_strDbName;
 	std::string m_strCharacterSet;
+	std::string m_strPluginDir;
 	int		m_iPort;
 
 	bool	m_bConnected;

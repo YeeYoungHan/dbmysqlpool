@@ -411,10 +411,12 @@ bool CDbMySQLConnection::Connect( )
 		return false;
 	}
 
+#ifdef USE_PLUGIN_DIR
 	if( m_strPluginDir.empty() == false )
 	{
 		mysql_options( &m_sttMySQL, MYSQL_PLUGIN_DIR, m_strPluginDir.c_str() );
 	}
+#endif
 	
 	if( m_iReadTimeout > 0 )
 	{

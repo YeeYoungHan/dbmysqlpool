@@ -63,10 +63,12 @@ bool CDbMySQLPool::Create( int iPoolCount, const char * pszHost, const char * ps
 		pclsDB->SetReadTimeout( m_iReadTimeout );
 		pclsDB->SetWriteTimeout( m_iWriteTimeout );
 
+#ifdef USE_PLUGIN_DIR
 		if( m_strPluginDir.empty() == false )
 		{
 			pclsDB->SetPluginDir( m_strPluginDir.c_str() );
 		}
+#endif
 
 		if( pclsDB->Connect( pszHost, pszUserId, pszPassWord, pszDbName, iPort, pszCharacterSet ) == false )
 		{

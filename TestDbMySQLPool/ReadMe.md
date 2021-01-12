@@ -16,19 +16,19 @@
 ### 실행 방법
 
 ```
-dos> TestDbMySQLPool.exe {db user id} {db password} {db name} {db port} {plugin path}
+dos> TestDbMySQLPool.exe {db ip} {db user id} {db password} {db name} {db port} {plugin path}
 ```
 
 * MySQL 5.x 에서 실행하는 방법
 
 ```
-dos> TestDbMySQLPool.exe root 1234 dbname
+dos> TestDbMySQLPool.exe 127.0.0.1 root 1234 dbname
 ```
 
 * MySQL 8.x 에서 실행하는 방법
   * mysql\32bit 에 caching_sha2_password.dll 이 포함되어 있다.
 
 ```
-dos> TestDbMySQLPool.exe root 1234 dbname 3306 C:\DbMysqlPool\trunk\mysql\32bit
+dos> TestDbMySQLPool.exe 127.0.0.1 root 1234 dbname 3306 C:\DbMysqlPool\trunk\mysql\32bit
 ```
 

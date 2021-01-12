@@ -48,13 +48,13 @@ bool FetchTest( void * pclsData, MYSQL_ROW & sttRow )
 
 int main( int argc, char * argv[] )
 {
-	char *pszUserId, *pszPassWord, *pszDbName, *pszPluginPath = NULL;
+	char *pszIp, *pszUserId, *pszPassWord, *pszDbName, *pszPluginPath = NULL;
 	std::string strRes;
 	int iDbPort = 3306;
 
 	if( argc < 4 )
 	{
-		printf( "[Usage] %s {db user id} {db password} {db name} {db port} {plugin path}\n", argv[0] );
+		printf( "[Usage] %s {db ip} {db user id} {db password} {db name} {db port} {plugin path}\n", argv[0] );
 		return 0;
 	}
 
@@ -64,19 +64,20 @@ int main( int argc, char * argv[] )
 
 	CLog::SetLevel( LOG_INFO | LOG_SQL | LOG_SQL1 | LOG_SQL2 | LOG_SQL3 | LOG_DEBUG );
 
-	pszUserId = argv[1];
-	pszPassWord = argv[2];
-	pszDbName = argv[3];
-
-	if( argc > 4)
-	{
-		iDbPort = atoi(argv[4]);
-	}
+	pszIp = argv[1];
+	pszUserId = argv[2];
+	pszPassWord = argv[3];
+	pszDbName = argv[4];
 
 	if( argc > 5 )
 	{
+		iDbPort = atoi(argv[5]);
+	}
+
+	if( argc > 6 )
+	{
 #ifdef USE_PLUGIN_DIR
-		pszPluginPath = argv[5];
+		pszPluginPath = argv[6];
 #else
 		printf( "mysql version < 5.6.10\n" );
 #endif
@@ -94,7 +95,7 @@ int main( int argc, char * argv[] )
 	}
 #endif
 
-	if( clsDB.Connect( "127.0.0.1", pszUserId, pszPassWord, pszDbName, iDbPort) == false )
+	if( clsDB.Connect( pszIp, pszUserId, pszPassWord, pszDbName, iDbPort) == false )
 	{
 		printf( "clsDB.Connect error\n" );
 		return 0;
@@ -131,7 +132,7 @@ int main( int argc, char * argv[] )
 #endif
 
 	// 2개의 DB 연결을 사용하는 DB connection POOL 생성
-	if( clsPool.Create( 2, "127.0.0.1", pszUserId, pszPassWord, pszDbName, iDbPort) == false )
+	if( clsPool.Create( 2, pszIp, pszUserId, pszPassWord, pszDbName, iDbPort) == false )
 	{
 		printf( "clsPool.Create() error\n" );
 		return -1;

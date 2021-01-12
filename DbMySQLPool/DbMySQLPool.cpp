@@ -338,6 +338,8 @@ void CDbMySQLPool::SetWriteTimeout( int iSecond )
 	}
 }
 
+#ifdef USE_PLUGIN_DIR
+
 /**
  * @ingroup DbMySQLPool
  * @brief MySQL 8.x 에 정상적으로 로그인하기 위한 plug-in 폴더 경로를 설정한다.
@@ -347,3 +349,5 @@ void CDbMySQLPool::SetPluginDir( const char * pszPluginDir )
 {
 	m_strPluginDir = pszPluginDir;
 }
+
+#endif

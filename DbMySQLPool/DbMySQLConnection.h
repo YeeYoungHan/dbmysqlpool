@@ -25,6 +25,10 @@
 #include "StringUtility.h"
 #include "Log.h"
 
+#if MYSQL_VERSION_ID >= 50610
+#define USE_PLUGIN_DIR
+#endif
+
 /**
  * @ingroup DbMySQLPool
  * @brief MySQL DB 연결 관리 및 쿼리 실행 클래스
@@ -63,7 +67,10 @@ public:
 
 	void SetReadTimeout( int iSecond );
 	void SetWriteTimeout( int iSecond );
+
+#ifdef USE_PLUGIN_DIR
 	void SetPluginDir( const char * pszPluginDir );
+#endif
 
 	void SetLogLevel( EnumLogLevel eLogLevel );
 

@@ -62,7 +62,10 @@ public:
 
 	void SetReadTimeout( int iSecond );
 	void SetWriteTimeout( int iSecond );
+
+#ifdef USE_PLUGIN_DIR
 	void SetPluginDir( const char * pszPluginDir );
+#endif
 
 private:
 	CSipMutex	m_clsMutex;

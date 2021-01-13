@@ -71,3 +71,4 @@ C++ STL 기반으로 MySQL DB pool 개발 프로젝트입니다.
 * https://blog.naver.com/websearch/221384048874 : INSERT, UPDATE, DELETE SQL 큐 생성 및 큐 쓰레드 생성 방법
 * https://blog.naver.com/websearch/221399110325 : MySQLSlaveOverWatcher 0.01 버전 배포
 * https://blog.naver.com/websearch/221498734022 : MySQL read, write timeout 설정 방법
+* https://blog.naver.com/websearch/222204750631 : MySQL 8.x 로그인 기능 추가

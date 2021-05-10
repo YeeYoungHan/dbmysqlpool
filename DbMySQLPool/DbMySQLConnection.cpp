@@ -27,7 +27,7 @@
 #pragma comment( lib, "mysqlclient" )
 #endif
 
-CDbMySQLConnection::CDbMySQLConnection() : m_bConnected(false), m_psttStmt(NULL), m_psttBind(NULL), m_iBindCount(0), m_iReadTimeout(0), m_iWriteTimeout(0), m_eLogLevel(LOG_SQL)
+CDbMySQLConnection::CDbMySQLConnection() : m_bSecureAuth(true), m_iPort(3306), m_bConnected(false), m_psttStmt(NULL), m_psttBind(NULL), m_iBindCount(0), m_iReadTimeout(0), m_iWriteTimeout(0), m_eLogLevel(LOG_SQL)
 {
 }
 
@@ -417,6 +417,11 @@ bool CDbMySQLConnection::Connect( )
 		mysql_options( &m_sttMySQL, MYSQL_PLUGIN_DIR, m_strPluginDir.c_str() );
 	}
 #endif
+
+	if( m_bSecureAuth == false )
+	{
+		mysql_options( &m_sttMySQL, MYSQL_SECURE_AUTH, &m_bSecureAuth );
+	}
 	
 	if( m_iReadTimeout > 0 )
 	{
@@ -804,6 +809,16 @@ void CDbMySQLConnection::SetPluginDir( const char * pszPluginDir )
 }
 
 #endif
+
+/**
+ * @ingroup DbPool
+ * @brief MySQL 3.x 버전에 연결하려면 bSecureAuth 를 false 로 저장하여서 본 메소드를 호출해야 한다.
+ * @param bSecureAuth secure_auth 를 사용하면 true 를 저장하고 그렇지 않으면 false 를 저장한다.
+ */
+void CDbMySQLConnection::SetSecureAuth( bool bSecureAuth )
+{
+	m_bSecureAuth = bSecureAuth;
+}
 
 /**
  * @ingroup DbMySQLPool

@@ -67,11 +67,14 @@ public:
 	void SetPluginDir( const char * pszPluginDir );
 #endif
 
+	void SetSecureAuth( bool bSecureAuth );
+
 private:
 	CSipMutex	m_clsMutex;
 	DB_CONNECTION_LIST m_clsStandByList;
 	DB_CONNECTION_MAP m_clsUseMap;
 	bool m_bDestroy;
+	bool m_bSecureAuth;
 	int m_iReadTimeout;
 	int m_iWriteTimeout;
 	std::string m_strPluginDir;

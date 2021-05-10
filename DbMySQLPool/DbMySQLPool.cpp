@@ -22,7 +22,7 @@
 #include "Log.h"
 #include "MemoryDebug.h"
 
-CDbMySQLPool::CDbMySQLPool() : m_bDestroy(false), m_iReadTimeout(0), m_iWriteTimeout(0)
+CDbMySQLPool::CDbMySQLPool() : m_bDestroy(false), m_bSecureAuth(true), m_iReadTimeout(0), m_iWriteTimeout(0)
 {
 }
 
@@ -69,6 +69,8 @@ bool CDbMySQLPool::Create( int iPoolCount, const char * pszHost, const char * ps
 			pclsDB->SetPluginDir( m_strPluginDir.c_str() );
 		}
 #endif
+
+		pclsDB->SetSecureAuth( m_bSecureAuth );
 
 		if( pclsDB->Connect( pszHost, pszUserId, pszPassWord, pszDbName, iPort, pszCharacterSet ) == false )
 		{
@@ -353,3 +355,14 @@ void CDbMySQLPool::SetPluginDir( const char * pszPluginDir )
 }
 
 #endif
+
+/**
+ * @ingroup DbPool
+ * @brief MySQL 3.x 버전에 연결하려면 bSecureAuth 를 false 로 저장하여서 본 메소드를 호출해야 한다.
+ * @param bSecureAuth secure_auth 를 사용하면 true 를 저장하고 그렇지 않으면 false 를 저장한다.
+ */
+void CDbMySQLPool::SetSecureAuth( bool bSecureAuth )
+{
+	m_bSecureAuth = bSecureAuth;
+}
+

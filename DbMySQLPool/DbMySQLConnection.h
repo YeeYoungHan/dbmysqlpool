@@ -72,6 +72,8 @@ public:
 	void SetPluginDir( const char * pszPluginDir );
 #endif
 
+	void SetSecureAuth( bool bSecureAuth );
+
 	void SetLogLevel( EnumLogLevel eLogLevel );
 
 	static void Final( );
@@ -83,6 +85,7 @@ private:
 	std::string	m_strDbName;
 	std::string m_strCharacterSet;
 	std::string m_strPluginDir;
+	bool				m_bSecureAuth;
 	int		m_iPort;
 
 	bool	m_bConnected;

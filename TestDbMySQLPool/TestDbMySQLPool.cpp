@@ -51,10 +51,11 @@ int main( int argc, char * argv[] )
 	char *pszIp, *pszUserId, *pszPassWord, *pszDbName, *pszPluginPath = NULL;
 	std::string strRes;
 	int iDbPort = 3306;
+	bool bSecureAuth = true;
 
 	if( argc < 4 )
 	{
-		printf( "[Usage] %s {db ip} {db user id} {db password} {db name} {db port} {plugin path}\n", argv[0] );
+		printf( "[Usage] %s {db ip} {db user id} {db password} {db name} {db port} {plugin path} {SecureAuthOff}\n", argv[0] );
 		return 0;
 	}
 
@@ -83,6 +84,11 @@ int main( int argc, char * argv[] )
 #endif
 	}
 
+	if( argc > 7 )
+	{
+		bSecureAuth = false;
+	}
+
 	// ===========================================================================
 	// CDbMySQLConnection 사용 예제
 
@@ -94,6 +100,8 @@ int main( int argc, char * argv[] )
 		clsDB.SetPluginDir( pszPluginPath );
 	}
 #endif
+
+	clsDB.SetSecureAuth( bSecureAuth );
 
 	if( clsDB.Connect( pszIp, pszUserId, pszPassWord, pszDbName, iDbPort) == false )
 	{
@@ -130,6 +138,8 @@ int main( int argc, char * argv[] )
 		clsPool.SetPluginDir( pszPluginPath );
 	}
 #endif
+
+	clsPool.SetSecureAuth( bSecureAuth );
 
 	// 2개의 DB 연결을 사용하는 DB connection POOL 생성
 	if( clsPool.Create( 2, pszIp, pszUserId, pszPassWord, pszDbName, iDbPort) == false )

@@ -45,6 +45,9 @@ C++ STL 기반으로 MySQL DB pool 개발 프로젝트입니다.
 * MySQLSlaveOverWatcher
   * MySQL slave 감시 서비스
 
+* MySQLAlterTable
+  * ALTER TABLE 명령을 DB 에 포함된 모든 테이블에 실행한다.
+
 * Publish
   * WIN32 용 빌드 버전 저장 폴더
 
